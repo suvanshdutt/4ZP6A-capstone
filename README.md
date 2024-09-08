@@ -1,2 +1,4 @@
 # 4ZP6A-capstone
-Capstone
+Capstone project
+
+Group members: Yuvraj Singh Sandhu, Suvansh Dutt, Suhaas Parcha, Ujjwal Raj
