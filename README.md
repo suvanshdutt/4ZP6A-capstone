@@ -1,5 +1,5 @@
 # 4ZP6A/B-capstone
-McMaster University Capstone project
+McMaster University Capstone Project
 
 Group members: Yuvraj Singh Sandhu, Suvansh Dutt, Suhaas Parcha, Ujjwal Raj
 
