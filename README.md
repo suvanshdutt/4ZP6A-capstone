@@ -1,7 +1,7 @@
 # 4ZP6A/B-capstone
 McMaster University Capstone Project
 
-Supervisor: Mehdi Moradi
+Supervisor: Dr.Mehdi Moradi
 
 Group members: Yuvraj Singh Sandhu, Suvansh Dutt, Suhaas Parcha, Ujjwal Raj
 
