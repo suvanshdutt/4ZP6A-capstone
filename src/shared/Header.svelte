@@ -2,7 +2,7 @@
     import { theme } from "../stores/theme";
 </script>
 
-<header>
+<main>
     <nav>
     <div class="logo">AI For Chest X-ray Read</div>
     <ul class="nav-links">
@@ -12,7 +12,7 @@
     </ul>
     </nav>
     
-</header>
+</main>
 
 <style>
 </style>
