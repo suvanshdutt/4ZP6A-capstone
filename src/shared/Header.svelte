@@ -5,6 +5,7 @@
 <header>
     <nav>
     <div class="logo">AI Chest Read</div>
+    <ul class="nav-links">
     
 </header>
 
