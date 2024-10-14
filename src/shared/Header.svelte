@@ -2,7 +2,7 @@
     import { theme } from "../stores/theme";
 </script>
 
-<main>
+<header>
     <nav>
     <div class="logo">AI For Chest X-ray Read</div>
     <ul class="nav-links">
@@ -12,10 +12,10 @@
     </ul>
     </nav>
     
-</main>
+</header>
 
 <style>
-main {
+header {
     background-color: white;
     color: rgb(125, 122, 125);
     padding: 10px 0;
