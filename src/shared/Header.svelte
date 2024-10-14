@@ -3,7 +3,9 @@
 </script>
 
 <header>
-    <h1>Hello, world!</h1>
+    <nav>
+    <div class="logo">AI Chest Read</div>
+    
 </header>
 
 <style>
