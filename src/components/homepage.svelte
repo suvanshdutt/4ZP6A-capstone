@@ -2,7 +2,7 @@
 </script>
 
 <main>
-    <h1>Homepage</h1>
+    <h1>Homepage 123</h1>
     <a href="/signup"><button>Go to Signup</button></a>
 </main>
 
