@@ -1,10 +1,6 @@
 <script>
     import App from "../App.svelte";
+    import Homepage from "../components/homepage.svelte";
 </script>
 
-<main>
-    <App />
-</main>
-
-<style>
-</style>
+<Homepage />
