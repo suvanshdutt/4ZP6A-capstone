@@ -13,7 +13,6 @@
     </nav>
     
 </header>
-
 <style>
 header {
     background-color: white;
