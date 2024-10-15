@@ -5,59 +5,81 @@
 <header style="--background: {$theme.background_color};">
     <nav>
     <div class="logo">AI For Chest X-ray Read</div>
-    <ul class="nav-links">
+    <div class="nav-links">
     <li><a href="#">Home</a></li>
     <li><a href="#">Login</a></li>
     <li><a href="#">Contact</a></li>
-    </ul>
+    </div>
     </nav>
     
 </header>
 <style>
 header {
-    
-    padding: 1em;
-    position: fixed;
-    width: 100%;
-    max-width: 240px;
-    margin: 0 auto;
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: space-between;
+    width:100%;
     background-color: var(--background);
-    z-index: 100;
 
 }
-    nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px auto;
-    padding: 0 20px;
+
+
+nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        float: right;
+        
 }
 
 .logo {
-    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    font-size: 1.0rem;
     font-weight: bold;
+    margin-left: 50px;
+    float: right;
+    width: auto;
+    
 }
 
 .nav-links {
     list-style: none;
     display: flex;
+    margin: 0px;
+    padding: 0;
+    width: auto;
+    float: right;
+    margin-right: 10;
+    width: 50%;
+    margin-right: -275%;
+    margin-left: -50%;
+    
+    
 }
 
 .nav-links li {
-    margin-right: 20px;
+    margin-right: 0px;
+    float: right;
 }
 
 .nav-links a {
     
-    padding: 10px;
+    padding: 5px;
     font-weight: bold;
     text-decoration: none;
+    float: right;
+    margin-right: 0px;
     background-color: var(--background);
 }
 
 .nav-links a:hover {
     background-color: var(--background);
-    border-radius: 4px;
+    border-radius: 1px;
     background-color: var(--background);
+    
 }
 </style>
