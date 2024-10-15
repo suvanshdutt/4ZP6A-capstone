@@ -2,7 +2,7 @@
     import { theme } from "../stores/theme";
 </script>
 
-<header>
+<header style="--background: {$theme.background_color};">
     <nav>
     <div class="logo">AI For Chest X-ray Read</div>
     <ul class="nav-links">
