@@ -15,16 +15,17 @@
 </header>
 <style>
 header {
-    background-color: white;
-    color: rgb(125, 122, 125);
-    padding: 10px 0;
+    
+    padding: 1em;
     position: fixed;
     width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+    background-color: var(--background);
     z-index: 100;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
 
-nav {
+}
+    nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,9 +34,8 @@ nav {
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #1f201f5a;
 }
 
 .nav-links {
@@ -48,15 +48,16 @@ nav {
 }
 
 .nav-links a {
-    color: rgb(0, 0, 0);
+    
     padding: 10px;
     font-weight: bold;
     text-decoration: none;
+    background-color: var(--background);
 }
 
 .nav-links a:hover {
-    background-color: #444743;
+    background-color: var(--background);
     border-radius: 4px;
-    color: white;
+    background-color: var(--background);
 }
 </style>
