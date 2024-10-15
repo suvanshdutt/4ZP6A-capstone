@@ -1,14 +1,14 @@
 <script lang="ts">
     import { theme } from "../stores/theme";
     import Header from "../shared/Header.svelte";
-
+    import { onMount } from "svelte";
 
     // using css variables
-    $: {
+    onMount(() => {
         for (const [key, val] of Object.entries($theme)) {
             document.documentElement.style.setProperty(`--${key}`, val);
         }
-    }
+    });
 </script>
 
 <Header />
