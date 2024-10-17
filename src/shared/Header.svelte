@@ -2,7 +2,7 @@
     import { theme } from "../stores/theme";
 </script>
 
-<header>
+<header style="--background: {$theme.background_color};">
     <nav>
     <div class="logo">AI For Chest X-ray Read</div>
     <ul class="nav-links">
@@ -15,48 +15,75 @@
 </header>
 <style>
 header {
-    background-color: white;
-    color: rgb(125, 122, 125);
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    z-index: 100;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: space-between;
+    width:100%;
+    background-color: var(--background);
+
 }
 
+
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px auto;
-    padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        float: right;
+        background-color: var(--background);
+        
 }
 
 .logo {
-    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    font-size: 1.0rem;
     font-weight: bold;
-    color: #1f201f5a;
+    margin-left: 50px;
+    float: right;
+    width: auto;
+    
 }
 
 .nav-links {
     list-style: none;
     display: flex;
+    margin: 0px;
+    padding: 0;
+    width: auto;
+    float: right;
+    margin-right: 10;
+    width: 50%;
+    margin-right: -275%;
+    margin-left: -50%;
+    background-color: var(--background);
+
+    
+    
 }
 
 .nav-links li {
-    margin-right: 20px;
+    margin-right: 0px;
+    float: right;
+    background-color: var(--background);
 }
 
 .nav-links a {
-    color: rgb(0, 0, 0);
-    padding: 10px;
+    
+    padding: 5px;
     font-weight: bold;
     text-decoration: none;
+    float: right;
+    margin-right: 0px;
+    background-color: var(--background);
 }
 
 .nav-links a:hover {
-    background-color: #444743;
-    border-radius: 4px;
-    color: white;
+    background-color: var(--background);
+    border-radius: 1px;
+
+    
 }
 </style>
