@@ -56,7 +56,7 @@ nav {
     float: right;
     margin-right: 10;
     width: 50%;
-    margin-right: -275%;
+    margin-right: -585%;;
     margin-left: -50%;
     background-color: var(--background);
 
