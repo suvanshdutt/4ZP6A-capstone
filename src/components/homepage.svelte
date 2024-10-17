@@ -18,8 +18,8 @@
         <p>Our Project is based on AI chest read, Our website gives the patient a radiographed report of the chest xray provided. The report checks on the potential diseases.</p>
         <p>Project By : Suvansh Dutt, Ujjwal Raj, Yuvraj Singh Sandhu and Suhaas Parcha </p>
         <div class="buttons">
-            <button>Login</button>
-            <button>Sign Up</button>
+            <button on:click={() => window.location.href = "../src/components/Login.svelte"}>Login</button>
+            <button on:click={() => window.location.href = "../src/components/Signup.svelte"}>Sign Up</button>
         </div>
     </div>
 </main>
