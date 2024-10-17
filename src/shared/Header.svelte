@@ -15,49 +15,75 @@
 </header>
 <style>
 header {
-    
-    padding: 1em;
-    position: fixed;
-    width: 100%;
-    max-width: 240px;
-    margin: 0 auto;
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: space-between;
+    width:100%;
     background-color: var(--background);
-    z-index: 100;
 
 }
-    nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px auto;
-    padding: 0 20px;
+
+
+nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        float: right;
+        background-color: var(--background);
+        
 }
 
 .logo {
-    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    font-size: 1.0rem;
     font-weight: bold;
+    margin-left: 50px;
+    float: right;
+    width: auto;
+    
 }
 
 .nav-links {
     list-style: none;
     display: flex;
+    margin: 0px;
+    padding: 0;
+    width: auto;
+    float: right;
+    margin-right: 10;
+    width: 50%;
+    margin-right: -275%;
+    margin-left: -50%;
+    background-color: var(--background);
+
+    
+    
 }
 
 .nav-links li {
-    margin-right: 20px;
+    margin-right: 0px;
+    float: right;
+    background-color: var(--background);
 }
 
 .nav-links a {
     
-    padding: 10px;
+    padding: 5px;
     font-weight: bold;
     text-decoration: none;
+    float: right;
+    margin-right: 0px;
     background-color: var(--background);
 }
 
 .nav-links a:hover {
     background-color: var(--background);
-    border-radius: 4px;
-    background-color: var(--background);
+    border-radius: 1px;
+
+    
 }
 </style>
