@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { theme } from "../stores/theme";
+    import {theme} from "../stores/theme";
     import Header from "../shared/Header.svelte";
-    import { onMount } from "svelte";
+    import {onMount} from "svelte";
+    import Button from "../shared/Button.svelte";
 
     // using css variables
     onMount(() => {
@@ -11,15 +12,16 @@
     });
 </script>
 
-<Header />
+<Header/>
 <main>
     <div class="About">
         <h1>About</h1>
-        <p>Our Project is based on AI chest read, Our website gives the patient a radiographed report of the chest xray provided. The report checks on the potential diseases.</p>
+        <p>Our Project is based on AI chest read, Our website gives the patient a radiographed report of the chest xray
+            provided. The report checks on the potential diseases.</p>
         <p>Project By : Suvansh Dutt, Ujjwal Raj, Yuvraj Singh Sandhu and Suhaas Parcha </p>
         <div class="buttons">
-            <button on:click={() => window.location.href = "../src/components/Login.svelte"}>Login</button>
-            <button on:click={() => window.location.href = "../src/components/Signup.svelte"}>Sign Up</button>
+            <Button on:click={() => window.location.href = "../src/components/Login.svelte"}>Login</Button>
+            <Button on:click={() => window.location.href = "../src/components/Signup.svelte"}>Sign Up</Button>
         </div>
     </div>
 </main>
@@ -29,13 +31,15 @@
         background-color: var(--background_color);
         color: var(--text_color);
         margin: 0;
-        font-family: 'Alumni Sans';
+        font-family: 'Alumni Sans', serif;
     }
+
     main {
         padding-top: 250px;
         margin-left: 200px;
         margin-right: 200px;
     }
+
     .About {
         margin-right: 750px;
     }
@@ -43,22 +47,25 @@
     h1 {
         color: #1e1e1e;
         font-size: 80px;
-        font-family: 'Alumni Sans';
+        font-family: 'Alumni Sans', serif;
         font-weight: 5;
     }
+
     p {
-        color: rgba(24,23,24,0.8);
+        color: rgba(24, 23, 24, 0.8);
         font-size: 20px;
-        font-family: 'Alumni Sans';
+        font-family: 'Alumni Sans', serif;
         font-weight: 5;
         margin-left: 25px;
     }
+
     .buttons {
         margin-left: 100px;
         margin-top: 100px;
         display: flex;
         gap: 100px;
     }
+
     button {
         background-color: var(--primary_color);
         color: #fdddd7;
