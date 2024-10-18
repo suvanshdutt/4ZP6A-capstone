@@ -1,18 +1,9 @@
 <script lang="ts">
-    import {theme} from "../stores/theme";
     import Header from "../shared/Header.svelte";
-    import {onMount} from "svelte";
     import Button from "../shared/Button.svelte";
 
-    // using css variables
-    onMount(() => {
-        for (const [key, val] of Object.entries($theme)) {
-            document.documentElement.style.setProperty(`--${key}`, val);
-        }
-    });
 </script>
 
-<Header/>
 <main>
     <div class="About">
         <h1>About</h1>
@@ -20,8 +11,8 @@
             provided. The report checks on the potential diseases.</p>
         <p>Project By : Suvansh Dutt, Ujjwal Raj, Yuvraj Singh Sandhu and Suhaas Parcha </p>
         <div class="buttons">
-            <Button on:click={() => window.location.href = "../src/components/Login.svelte"}>Login</Button>
-            <Button on:click={() => window.location.href = "../src/components/Signup.svelte"}>Sign Up</Button>
+            <Button on:click={() => window.location.href = "/login"}>Login</Button>
+            <Button inverse={true} on:click={() => window.location.href = "/signup"}>Sign Up</Button>
         </div>
     </div>
 </main>
@@ -31,30 +22,27 @@
         background-color: var(--background_color);
         color: var(--text_color);
         margin: 0;
-        font-family: 'Alumni Sans', serif;
     }
 
     main {
-        padding-top: 250px;
-        margin-left: 200px;
-        margin-right: 200px;
+        margin-top: 15vh;
+        margin-left: 15vw;
+        margin-right: 15vw;
     }
 
     .About {
-        margin-right: 750px;
+        margin-right: 40vw;
     }
 
     h1 {
-        color: #1e1e1e;
+        color: var(--heading_text);
         font-size: 80px;
-        font-family: 'Alumni Sans', serif;
         font-weight: 5;
     }
 
     p {
-        color: rgba(24, 23, 24, 0.8);
+        color: var(--text_color);
         font-size: 20px;
-        font-family: 'Alumni Sans', serif;
         font-weight: 5;
         margin-left: 25px;
     }
@@ -64,17 +52,5 @@
         margin-top: 100px;
         display: flex;
         gap: 100px;
-    }
-
-    button {
-        background-color: var(--primary_color);
-        color: #fdddd7;
-        font-size: 22px;
-        font-weight: 5;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        width: 120px;
-        height: 48px;
     }
 </style>

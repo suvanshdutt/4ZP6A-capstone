@@ -1,17 +1,11 @@
 <script lang="ts">
-    import { theme } from "../stores/theme";
     import Header from "../shared/Header.svelte";
-    import { onMount } from "svelte";
+    import Button from "../shared/Button.svelte";
 
-    // using css variables
-    onMount(() => {
-        for (const [key, val] of Object.entries($theme)) {
-            document.documentElement.style.setProperty(`--${key}`, val);
-        }
-    });
+
+    
 </script>
 
-<Header />
 <main>
     <div class="login-form">
         <div class="form-left">
@@ -25,7 +19,7 @@
             <input type="password" placeholder="Password" />
 
             <div class="forgot-password">
-                <a href="#">Forgot password?</a>
+                <a href="/">Forgot password?</a>
             </div>
 
             <button class="login-btn">Login</button>
@@ -48,8 +42,8 @@
 
 <style>
     :global(body) {
-        background-color: #fceceb; /* Pinkish background */
-        color: var(--text_color, #1e1e1e);
+        background-color: var(--background_color); /* Pinkish background */
+        color: var(--text_color);
         font-family: 'Montserrat', sans-serif;
         margin: 0;
     }
@@ -59,8 +53,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        padding: 0 20px;
-        background-color: #fceceb; 
+        margin-top: -10vh;
     }
 
     .login-form {
@@ -68,7 +61,7 @@
         justify-content: space-between;
         width: 100%;
         max-width: 1200px;
-        background-color: #fceceb; 
+        background-color: var(--background_color); /* Pinkish background */
         padding: 40px;
         border-radius: 15px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);

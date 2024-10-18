@@ -1,17 +1,9 @@
 <script lang="ts">
-    import { theme } from "../stores/theme";
     import Header from "../shared/Header.svelte";
-    import { onMount } from "svelte";
+    import Button from "../shared/Button.svelte";
 
-    // Update theme variables on mount
-    onMount(() => {
-        for (const [key, val] of Object.entries($theme)) {
-            document.documentElement.style.setProperty(`--${key}`, val);
-        }
-    });
 </script>
 
-<Header />
 <main>
     <div class="signup-form">
         <div class="form-left">
@@ -36,18 +28,18 @@
 
             <div class="social-login">
                 <button class="social-btn">
-                    <img src="../Images/google.png" alt="Google" />
+                    <img src="/Images/google.png" alt="Google" />
                 </button>
                 <button class="social-btn">
-                    <img src="../Images/facebook.png" alt="Facebook" />
+                    <img src="/Images/Facebook.png" alt="Facebook" />
                 </button>
                 <button class="social-btn">
-                    <img src="../Images/Linkedin.png" alt="Linkedin" />
+                    <img src="/Images/Linkedin.png" alt="Linkedin" />
                 </button>
             </div>
 
             <p class="login-link">
-                Already have an account? <a href="../components/Login.svelte">Login</a>
+                Already have an account? <a href="/login">Login</a>
             </p>
         </div>
     </div>
@@ -65,9 +57,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 90vh;
         padding: 0 20px;
         background-color: #fceceb;
+        margin-top: 0vh;
     }
 
     .signup-form {
