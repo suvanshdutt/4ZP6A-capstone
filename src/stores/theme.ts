@@ -13,7 +13,7 @@ export const _theme: Theme = {
   text_color: "#000000",
   background_color: "#fbede9",
   primary_color: "#da3029",
-  secondary_color: "#e9766e",
+  secondary_color: "#FDDDD7",
   accent_color: "#000000",
   grey_text: "rgba(125,122,125,100%)",
 };
