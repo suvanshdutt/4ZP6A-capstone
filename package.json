@@ -20,6 +20,6 @@
 	"type": "module",
 	"dependencies": {
 		"my-svelte-project": "file:",
-		"@sveltejs/adapter-auto": "^3.2.5",
+		"@sveltejs/adapter-auto": "^3.2.5"
 	}
 }
