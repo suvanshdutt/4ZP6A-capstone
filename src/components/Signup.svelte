@@ -1,8 +1,4 @@
-<script lang="ts">
-    import Header from "../shared/Header.svelte";
-    import Button from "../shared/Button.svelte";
-
-</script>
+<script></script>
 
 <main>
     <div class="signup-form">
@@ -10,13 +6,13 @@
             <h1>Sign Up</h1>
 
             <h2>Full Name</h2>
-            <input type="text" placeholder="John Smith" />
+            <input placeholder="John Smith" type="text"/>
 
             <h2>Email</h2>
-            <input type="email" placeholder="Johnsmith@gmail.com" />
+            <input placeholder="Johnsmith@gmail.com" type="email"/>
 
             <h2>Password</h2>
-            <input type="password" placeholder="Password" />
+            <input placeholder="Password" type="password"/>
 
             <button class="signup-btn">Sign Up</button>
 
@@ -28,13 +24,13 @@
 
             <div class="social-login">
                 <button class="social-btn">
-                    <img src="/Images/google.png" alt="Google" />
+                    <img alt="Google" src="/Images/google.png"/>
                 </button>
                 <button class="social-btn">
-                    <img src="/Images/Facebook.png" alt="Facebook" />
+                    <img alt="Facebook" src="/Images/Facebook.png"/>
                 </button>
                 <button class="social-btn">
-                    <img src="/Images/Linkedin.png" alt="Linkedin" />
+                    <img alt="Linkedin" src="/Images/Linkedin.png"/>
                 </button>
             </div>
 
@@ -47,7 +43,7 @@
 
 <style>
     :global(body) {
-        background-color: #fceceb; 
+        background-color: #fceceb;
         color: var(--text_color, #1e1e1e);
         font-family: 'Montserrat', sans-serif;
         margin: 0;
@@ -60,7 +56,7 @@
         height: 90vh;
         padding: 0 20px;
         background-color: #fceceb;
-        margin-top: 0vh;
+        margin-top: 0;
     }
 
     .signup-form {

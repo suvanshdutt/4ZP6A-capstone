@@ -2,4 +2,4 @@
     import Signup from '../../components/Signup.svelte';
 </script>
 
-<Signup />
+<Signup/>
