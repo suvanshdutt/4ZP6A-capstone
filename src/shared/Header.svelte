@@ -8,7 +8,7 @@
             <a class="logo">AI For Chest X-ray read</a>
             <div class="header-right">
               <a class="active" href="#home">Home</a>
-              <a href="contact">Login</a>
+              <a href="../components/Login.svelte">Login</a>
               <a href="about">Contact</a>
             </div>
           </div>
