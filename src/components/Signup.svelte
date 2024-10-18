@@ -1,30 +1,18 @@
-<script lang="ts">
-    import { theme } from "../stores/theme";
-    import Header from "../shared/Header.svelte";
-    import { onMount } from "svelte";
+<script></script>
 
-    // Update theme variables on mount
-    onMount(() => {
-        for (const [key, val] of Object.entries($theme)) {
-            document.documentElement.style.setProperty(`--${key}`, val);
-        }
-    });
-</script>
-
-<Header />
 <main>
     <div class="signup-form">
         <div class="form-left">
             <h1>Sign Up</h1>
 
             <h2>Full Name</h2>
-            <input type="text" placeholder="John Smith" />
+            <input placeholder="John Smith" type="text"/>
 
             <h2>Email</h2>
-            <input type="email" placeholder="Johnsmith@gmail.com" />
+            <input placeholder="Johnsmith@gmail.com" type="email"/>
 
             <h2>Password</h2>
-            <input type="password" placeholder="Password" />
+            <input placeholder="Password" type="password"/>
 
             <button class="signup-btn">Sign Up</button>
 
@@ -36,18 +24,18 @@
 
             <div class="social-login">
                 <button class="social-btn">
-                    <img src="../Images/google.png" alt="Google" />
+                    <img alt="Google" src="/Images/google.png"/>
                 </button>
                 <button class="social-btn">
-                    <img src="../Images/facebook.png" alt="Facebook" />
+                    <img alt="Facebook" src="/Images/Facebook.png"/>
                 </button>
                 <button class="social-btn">
-                    <img src="../Images/Linkedin.png" alt="Linkedin" />
+                    <img alt="Linkedin" src="/Images/Linkedin.png"/>
                 </button>
             </div>
 
             <p class="login-link">
-                Already have an account? <a href="../components/Login.svelte">Login</a>
+                Already have an account? <a href="/login">Login</a>
             </p>
         </div>
     </div>
@@ -55,7 +43,7 @@
 
 <style>
     :global(body) {
-        background-color: #fceceb; 
+        background-color: #fceceb;
         color: var(--text_color, #1e1e1e);
         font-family: 'Montserrat', sans-serif;
         margin: 0;
@@ -65,9 +53,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 90vh;
         padding: 0 20px;
         background-color: #fceceb;
+        margin-top: 0;
     }
 
     .signup-form {

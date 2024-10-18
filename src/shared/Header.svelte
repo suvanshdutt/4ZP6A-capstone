@@ -2,13 +2,13 @@
     import { theme } from "../stores/theme";
 </script>
 
-<header style="--background: {$theme.background_color};">
+<header>
     <nav>
         <div class="header">
             <a class="logo">AI For Chest X-ray read</a>
             <div class="header-right">
-              <a class="active" href="#home">Home</a>
-              <a href="src/components/Login.svelte">Login</a>
+              <a class="active" href="/">Home</a>
+              <a href="/login">Login</a>
               <a href="about">Contact</a>
             </div>
           </div>
@@ -18,7 +18,8 @@
 <style>
 .header {
   overflow: hidden;
-  background-color: var(--background);
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--background_color);
   padding: 20px 10px;
 }
 
@@ -41,13 +42,13 @@
 
 
 .header a:hover {
-  background-color: var(--background);
+  background-color: var(--background_color);
   
 }
 
 
 .header a.active {
-    background-color: var(--background);
+    background-color: var(--background_color);
 }
 
 /* Float the link section to the right */
