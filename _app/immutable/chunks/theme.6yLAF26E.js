@@ -1,0 +1,1 @@
+import{w as e}from"./index.BI33XI_R.js";const o={text_color:"rgba(24, 23, 24, 0.8)",background_color:"#fbede9",primary_color:"#da3029",secondary_color:"#FDDDD7",accent_color:"#000000",grey_text:"rgba(125,122,125,100%)",heading_text:"#1e1e1e"},t=e(o);export{t};
