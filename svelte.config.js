@@ -13,7 +13,7 @@ const config = {
       strict: true,
     }),
     paths: {
-      base: "/4ZP6A-capstone",
+      base: process.env.BASE_PATH || '',
     },
     prerender: {
       entries: ['*'], // Prerender all pages

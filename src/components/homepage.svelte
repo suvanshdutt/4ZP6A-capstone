@@ -12,8 +12,12 @@
             provided. The report checks on the potential diseases.</p>
         <p>Project By : Suvansh Dutt, Ujjwal Raj, Yuvraj Singh Sandhu and Suhaas Parcha </p>
         <div class="buttons">
-            <Button on:click={() => window.location.href = `${base}/login`}>Login</Button>
-            <Button inverse={true} on:click={() => window.location.href = `${base}/signup`}>Sign Up</Button>
+            <a href={`${base}/login`}>
+                <Button>Login</Button>
+            </a>
+            <a href={`${base}/signup`}>
+                <Button inverse={true}>Sign Up</Button>
+            </a>
         </div>
     </div>
 </main>
