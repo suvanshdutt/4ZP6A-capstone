@@ -1,12 +1,14 @@
-<script></script>
+<script>
+    import {base} from '$app/paths';
+</script>
 
 <header>
     <nav>
         <div class="header">
-            <a class="logo" href="/">AI For Chest X-ray read</a>
+            <a class="logo" href={`${base}/login`}>AI For Chest X-ray read</a>
             <div class="header-right">
-                <a class="active" href="/">Home</a>
-                <a href="/login">Login</a>
+                <a class="active" href={`${base}/`}>Home</a>
+                <a href={`${base}/login`}>Login</a>
                 <!--              <a href="about">Contact</a>-->
                 <!--                Line above commented breaks the static page becuse Contact is not made yet-->
             </div>

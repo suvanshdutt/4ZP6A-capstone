@@ -41,13 +41,6 @@
 </main>
 
 <style>
-    :global(body) {
-        background-color: var(--background_color); /* Pinkish background */
-        color: var(--text_color);
-        font-family: 'Montserrat', sans-serif;
-        margin: 0;
-    }
-
     main {
         display: flex;
         justify-content: center;

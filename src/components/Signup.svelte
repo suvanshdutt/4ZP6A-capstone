@@ -42,13 +42,6 @@
 </main>
 
 <style>
-    :global(body) {
-        background-color: #fceceb;
-        color: var(--text_color, #1e1e1e);
-        font-family: 'Montserrat', sans-serif;
-        margin: 0;
-    }
-
     main {
         display: flex;
         justify-content: center;
