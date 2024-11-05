@@ -1,0 +1,10 @@
+Agenda : Strategic plan to effectively advance our backend development process. 
+
+Description: Discussed the packages that we need to import in order to do the backend and train our model. We discussed the needs :
+1.We need a subset:Where do we get the subset from -> NIH, 45 gb
+2.We need a data loader/adapter- Pytorch 
+3.Analyze and manipulating the data - pandas
+4.Train and test the model- Todo
+5.Output beautification- Todo
+
+Attendees : Ujjwal, Suhaas, Yuvraj, Suvansh
