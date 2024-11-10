@@ -18,6 +18,7 @@ package-lock.json
 Thumbs.db
 
 # Env
+.venv
 .env
 .env.*
 !.env.example
@@ -26,3 +27,6 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# dataset
+backend/dataset
