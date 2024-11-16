@@ -23,7 +23,7 @@
         document.getElementById('fileElem').click();
         }} > 
         Choose File 
-      </Button>
+        </Button>
         </div>
       </div>
     </form>
@@ -43,12 +43,6 @@
   float: left;
   text-align : center;
 }
-#drop-area.highlight {
-  border-color: #fbede9;
-}
-p {
-  margin-top: 0;
-}
 #fileElem {
   display: none;
 }
@@ -63,20 +57,7 @@ p {
   align-items: center;
 }
 
-#gallery {
-  margin-top: 10px;
-}
-#gallery img {
-  width: 150px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  vertical-align: middle;
-  background: #fbede9;
-}
 
-.button:hover {
-  background: #fbede9;
-}
 
 
 .buttons {
