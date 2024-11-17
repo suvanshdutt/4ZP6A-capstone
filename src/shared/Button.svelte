@@ -36,6 +36,8 @@
         padding: 13px 26px;
         border: black solid 1px;
         border-radius: 16px;
+        transition: 0s background-color color border;
+
     }
     .inverse{
         border: var(--primary_color) solid 1px;
@@ -44,5 +46,6 @@
     }
     button:hover {
         box-shadow: var(--grey) 3px 3px 10px;
+        transition-delay: 0.05s;
     }
 </style>

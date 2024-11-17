@@ -5,7 +5,7 @@
 <header>
     <nav>
         <div class="header">
-            <a class="logo">AI For Chest X-ray read</a>
+            <a class="logo" href ="/">AI For Chest X-ray read</a>
             <div class="header-right">
               <a class="active" href="/">Home</a>
               <a href="/login">Login</a>
