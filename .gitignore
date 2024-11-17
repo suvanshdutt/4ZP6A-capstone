@@ -30,3 +30,4 @@ vite.config.ts.timestamp-*
 
 # dataset
 backend/dataset
+backend/ResNet*
