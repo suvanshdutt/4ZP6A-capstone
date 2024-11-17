@@ -34,7 +34,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center; /* Vertically centers items */
-    gap: 50px; /* Adjust spacing between the elements */
+    gap: 200px; /* Adjust spacing between the elements */
     flex-wrap: wrap; /* Allows items to wrap if the screen is smaller */
 }
 
@@ -55,6 +55,8 @@
 
     .About {
         margin-right: 5px;
+        margin-left: 50px;
+        width: 50%;
     }
 
     h1 {
