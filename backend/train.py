@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[14]:
+# In[1]:
 
 
 import os
@@ -31,7 +31,7 @@ from classes.Metrics_class import Metrics
 
 # # Loading the data
 
-# In[15]:
+# In[2]:
 
 
 # Getting the directories for data
@@ -52,6 +52,9 @@ labels_expanded['Id'] = list(zip(labels_expanded['Patient ID'], labels_expanded[
 labels_expanded = labels_expanded.explode('Finding Label')
 data = labels_expanded[['Id','Image Index', 'Finding Label', 'Patient Age', 'Patient Gender', 'View Position']].copy()
 
+# Removing the entries with "No Finding" label
+data = data[data['Finding Label'] != 'No Finding']
+
 # Adding the disease code to the data
 unique_diseases = data['Finding Label'].unique()
 disease_to_number = {disease: idx for idx, disease in enumerate(unique_diseases)}
@@ -65,7 +68,7 @@ data.reset_index(drop=True, inplace=True)
 
 # # Printing an Image
 
-# In[ ]:
+# In[3]:
 
 
 image_paths = glob.glob(os.path.join(DATA_DIR, 'images_*', 'images', '*.png'))
@@ -85,14 +88,9 @@ plt.axis('off')
 # plt.show()
 
 
-# ## Creating the DataLoader
-
-# In[20]:
-
-
 # # Loading the parameters and dataloaders
 
-# In[21]:
+# In[4]:
 
 
 # Getting the image paths
@@ -103,10 +101,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Hyperparameters
 epochs = 50
-learning_rate = 0.0001
+learning_rate = 0.0005
 batch_size = 180
-test_split_size = 0.1
-train_size = 0.1
+test_split_size = 0.2
+train_size = 0.8
 # num_of_workers = 16
 
 # Defining the model, loss function and optimizer
@@ -147,17 +145,9 @@ test_dataset = NIH_dataset(df=test_df, image_directories=image_paths, transform=
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
 
 
-# # Metrics class
-
-# In[ ]:
-
-
-        
-
-
 # # Training the model
 
-# In[118]:
+# In[ ]:
 
 
 def train(epochs: int, model: torch.nn.Module, dataloader: torch.utils.data.DataLoader, criterion: torch.nn.Module, optimizer: torch.optim.Optimizer) -> tuple[torch.nn.Module, Metrics]:
@@ -208,7 +198,7 @@ test_df.to_pickle('test_df.pkl')
 
 # # Clearing cache and running garbage collector
 
-# In[120]:
+# In[ ]:
 
 
 # Empty GPU
