@@ -10,7 +10,7 @@
         <div class="About">
             <h1>About</h1>
             <p>Our Project is based on AI chest read, Our website gives the patient a radiographed report of the chest xray
-                provided. The report checks on the potential diseases.</p>
+                provided. The report checks on the potential disease/s.</p>
             <p>Project By : Suvansh Dutt, Ujjwal Raj, Yuvraj Singh Sandhu and Suhaas Parcha </p>
             <div class="buttons">
                 <Button on:click={() => window.location.href = "/login"}>Login</Button>
