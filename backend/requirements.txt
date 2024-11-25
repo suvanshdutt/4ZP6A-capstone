@@ -1,0 +1,7 @@
+matplotlib
+numpy
+pandas
+tqdm
+scikit-learn
+torchmetrics
+ipywidgets
