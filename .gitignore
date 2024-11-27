@@ -33,4 +33,8 @@ backend/dataset
 backend/ResNet*
 
 # Cache
-backend/**/__pycache__
+__pycache__
+*.pyc
+
+# Jupyter Notebook
+.ipynb_checkpoints
