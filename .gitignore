@@ -31,3 +31,6 @@ vite.config.ts.timestamp-*
 # dataset
 backend/dataset
 backend/ResNet*
+
+# Cache
+backend/**/__pycache__
