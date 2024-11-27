@@ -1,6 +1,6 @@
 # Import required hyperparams
 import torch
-from backend.hyperparams import out_features, disease_to_number
+from hyperparams import out_features, disease_to_number
 
 # Importing the necessary libraries
 from matplotlib import pyplot as plt

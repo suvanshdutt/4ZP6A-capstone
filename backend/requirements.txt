@@ -1,7 +1,16 @@
+--extra-index-url https://download.pytorch.org/whl/cu124
 matplotlib
 numpy
 pandas
 tqdm
 scikit-learn
+torch
+torchvision
+torchaudio
 torchmetrics
+seaborn
 ipywidgets
+jupyter
+nbconvert
+ipython
+icecream
