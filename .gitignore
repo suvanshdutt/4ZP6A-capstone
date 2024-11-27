@@ -31,3 +31,10 @@ vite.config.ts.timestamp-*
 # dataset
 backend/dataset
 backend/ResNet*
+
+# Cache
+__pycache__
+*.pyc
+
+# Jupyter Notebook
+.ipynb_checkpoints
