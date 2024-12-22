@@ -1,16 +1,13 @@
---extra-index-url https://download.pytorch.org/whl/cu124
-matplotlib
-numpy
-pandas
-tqdm
-scikit-learn
-torch
-torchvision
-torchaudio
+torch @ https://download.pytorch.org/whl/cu124/torch-2.5.1%2Bcu124-cp312-cp312-win_amd64.whl#sha256=3c3f705fb125edbd77f9579fa11a138c56af8968a10fc95834cdd9fdf4f1f1a6 ; platform_system == "Windows"
+torchvision @ https://download.pytorch.org/whl/cu124/torchvision-0.20.1%2Bcu124-cp312-cp312-win_amd64.whl#sha256=0f6c7b3b0e13663fb3359e64f3604c0ab74c2b4809ae6949ace5635a5240f0e5 ; platform_system == "Windows"
+torchaudio @ https://download.pytorch.org/whl/cu124/torchaudio-2.5.1%2Bcu124-cp312-cp312-win_amd64.whl#sha256=cca2de94f232611b20d379edf28befa7a1aa482ae9ed41c3b958b08ed1bf4983 ; platform_system == "Windows"
+torch  ; platform_system != "Windows"
+torchvision ; platform_system != "Windows"
+torchaudio ; platform_system != "Windows"
+timm
+clearml
+lightning
 torchmetrics
-seaborn
-ipywidgets
-jupyter
-nbconvert
-ipython
-icecream
+matplotlib
+kagglehub
+pandas

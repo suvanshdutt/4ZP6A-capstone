@@ -23,6 +23,7 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.test
+venv
 
 # Vite
 vite.config.js.timestamp-*
@@ -31,6 +32,7 @@ vite.config.ts.timestamp-*
 # dataset
 backend/dataset
 backend/ResNet*
+datasets
 
 # Cache
 __pycache__
