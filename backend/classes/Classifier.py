@@ -1,3 +1,4 @@
+import numpy as np
 import timm
 import timm.optim
 import torch
@@ -98,27 +99,28 @@ class Classifier(LightningModule):
         """
         _images, _labels = batch
         logits: Tensor = self(_images)
-        predictions = torch.sigmoid(logits) > 0.8
+        probabilities = torch.sigmoid(logits)
         loss = nn.functional.binary_cross_entropy_with_logits(logits, _labels)
         acc = accuracy(
-            preds=predictions,
+            preds=probabilities,
             target=_labels,
             num_classes=self.num_classes,
+            average="weighted",
             task="multilabel",
             num_labels=self.num_classes,
         )
         confusion = confusion_matrix(
-            preds=predictions,
+            preds=probabilities,
             target=_labels,
             num_classes=self.num_classes,
             task="multilabel",
             num_labels=self.num_classes,
         )
         f1 = f1_score(
-            preds=predictions,
+            preds=probabilities,
             target=_labels,
             num_classes=self.num_classes,
-            average="macro",
+            average="weighted",
             task="multilabel",
             num_labels=self.num_classes,
         )

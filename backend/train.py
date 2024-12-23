@@ -1,4 +1,6 @@
 from argparse import Namespace, ArgumentParser
+from pathlib import Path
+
 from utility.get_model import get_model
 from utility.load_data import load_data
 from utility.parse_args import parse_arguments
@@ -16,7 +18,6 @@ from torchvision.transforms import (
     Normalize,
     Resize,
     RandomHorizontalFlip,
-    RandomGrayscale,
     RandomAffine,
     Grayscale,
 )
@@ -81,15 +82,18 @@ def main():
     # Load the data with the transformations
     transform: Compose = Compose(
         [
+            # Convert to 1 channel - some images are 4 channels, some 3 but all grayscale
+            Grayscale(num_output_channels=3),
             Resize(
                 (args.image_size, args.image_size),
                 interpolation=InterpolationMode.BICUBIC,
             ),
-            # Convert to 1 channel - some images are 4 channels, some 3 but all grayscale
-            Grayscale(num_output_channels=3),
             RandomHorizontalFlip(),
             ToTensor(),
-            # Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            Normalize(
+                mean=[0.5057019, 0.5057019, 0.5057019],
+                std=[0.24987267, 0.24987267, 0.24987267],
+            ),
         ]
     )
     train_loader, val_loader, test_loader = load_data(_args=args, _transforms=transform)
@@ -99,9 +103,11 @@ def main():
     model, trainer = train(model, args, train_loader, val_loader, task)
     # Save the model
     trainer.save_checkpoint(
-        filepath=args.root_dir + "/models/" + args.model_name + ".ckpt",
+        Path(args.root_dir) / f"{args.model_name}.ckpt",
         weights_only=False,
     )
+    # Test the model
+    trainer.test(model=model, dataloaders=test_loader)
 
 
 if __name__ == "__main__":

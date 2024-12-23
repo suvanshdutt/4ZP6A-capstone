@@ -8,6 +8,8 @@ from torch import Tensor
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
+from backend.utility.find_mean_std import get_mean_std
+
 
 class NIH(Dataset):
     # Class labels
@@ -164,18 +166,25 @@ if __name__ == "__main__":
     nih = NIH(
         root_dir=DATA_DIR,
         transform=transforms.Compose(
-            [transforms.Grayscale(num_output_channels=1), transforms.ToTensor()]
+            [
+                transforms.Grayscale(num_output_channels=3),
+                transforms.ToTensor(),
+                transforms.Resize((128, 128)),
+            ]
         ),
     )
     print(len(nih))
     # Plot first 5 images and labels
     import matplotlib.pyplot as plt
 
-    fig, axs = plt.subplots(1, 5, figsize=(20, 4))
-    loader = DataLoader(nih, batch_size=256, shuffle=True)
-    images, labels = next(iter(loader))
-    for i in range(5):
-        axs[i].imshow(images[i].permute(1, 2, 0))
-        axs[i].set_title(NIH.decode_label(labels[i]))
-        axs[i].axis("off")
-    plt.show()
+    loader = DataLoader(
+        nih, batch_size=256, shuffle=True, num_workers=8, persistent_workers=True
+    )
+    # fig, axs = plt.subplots(1, 5, figsize=(20, 4))
+    # images, labels = next(iter(loader))
+    # for i in range(5):
+    #     axs[i].imshow(images[i].permute(1, 2, 0))
+    #     axs[i].set_title(NIH.decode_label(labels[i]))
+    #     axs[i].axis("off")
+    # plt.show()
+    get_mean_std(loader)
