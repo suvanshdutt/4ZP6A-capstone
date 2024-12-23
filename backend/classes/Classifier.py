@@ -98,7 +98,7 @@ class Classifier(LightningModule):
         """
         _images, _labels = batch
         logits: Tensor = self(_images)
-        predictions = torch.sigmoid(logits) > 0.7
+        predictions = torch.sigmoid(logits) > 0.8
         loss = nn.functional.binary_cross_entropy_with_logits(logits, _labels)
         acc = accuracy(
             preds=predictions,

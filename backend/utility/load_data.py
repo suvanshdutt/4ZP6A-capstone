@@ -29,7 +29,7 @@ def load_data(
         lengths=[
             _args.train_size,
             _args.val_size,
-            1 - _args.train_size - _args.val_size,
+            int(1 - _args.train_size - _args.val_size),
         ],
     )
     print(f"Training dataset size: {len(train_dataset)}")

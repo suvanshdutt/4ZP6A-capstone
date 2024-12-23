@@ -11,9 +11,9 @@ params = {
     "BATCH_SIZE": 256,
     "IMAGE_SIZE": 128,
     "SHOW_PLOTS": False,
-    "NUM_WORKERS": 4,
+    "NUM_WORKERS": 8,
     "NUM_CLASSES": 15,
-    "TRAIN_SIZE": 0.1,
-    "VAL_SIZE": 0.1,
+    "TRAIN_SIZE": 0.8,
+    "VAL_SIZE": 0.2,
     "ROOT_DIR": "D:\\College\\4ZP6A-capstone\\backend",
 }
