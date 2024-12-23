@@ -40,3 +40,6 @@ __pycache__
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# logs
+lightning_logs
