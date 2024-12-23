@@ -5,7 +5,8 @@ from pathlib import Path
 from typing import Any
 from PIL import Image
 from torch import Tensor
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms
 
 
 class NIH(Dataset):
@@ -160,18 +161,21 @@ class NIH(Dataset):
 if __name__ == "__main__":
     # Example usage - root_dir is the backend folder. This makes a datasets folder
     DATA_DIR = "D:\\College\\4ZP6A-capstone\\backend"
-    nih = NIH(root_dir=DATA_DIR)
+    nih = NIH(
+        root_dir=DATA_DIR,
+        transform=transforms.Compose(
+            [transforms.Grayscale(num_output_channels=1), transforms.ToTensor()]
+        ),
+    )
     print(len(nih))
     # Plot first 5 images and labels
     import matplotlib.pyplot as plt
 
     fig, axs = plt.subplots(1, 5, figsize=(20, 4))
+    loader = DataLoader(nih, batch_size=256, shuffle=True)
+    images, labels = next(iter(loader))
     for i in range(5):
-        image, label = nih[i]
-        # RGB image
-        axs[i].imshow(image, cmap="gray")
-        axs[i].set_title(NIH.decode_label(label))
-        # Show encoded label
-        assert NIH.encode_label(NIH.decode_label(label)).tolist() == label.tolist()
+        axs[i].imshow(images[i].permute(1, 2, 0))
+        axs[i].set_title(NIH.decode_label(labels[i]))
         axs[i].axis("off")
     plt.show()

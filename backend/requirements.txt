@@ -11,3 +11,4 @@ torchmetrics
 matplotlib
 kagglehub
 pandas
+tensorboard

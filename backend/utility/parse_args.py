@@ -12,6 +12,28 @@ def parse_arguments(parser: ArgumentParser) -> Namespace:
     Returns:
         Namespace: An object containing the parsed arguments.
     """
+
+    parser.add_argument(
+        "--model_arch",
+        type=str,
+        default=params["MODEL_ARCH"],
+        help="The architecture of the model to use for training.",
+    )
+
+    parser.add_argument(
+        "--model_name",
+        type=str,
+        default=params["MODEL_NAME"],
+        help="The name of the model to use for training. This is typically what is passed to the timm.create_model function.",
+    )
+
+    parser.add_argument(
+        "--pretrained",
+        type=bool,
+        default=params["PRETRAINED"],
+        help="Whether to use a pretrained model.",
+    )
+
     parser.add_argument(
         "--batch_size",
         type=int,
@@ -77,5 +99,17 @@ def parse_arguments(parser: ArgumentParser) -> Namespace:
         type=str,
         default=params["ROOT_DIR"],
         help="The root directory for the dataset.",
+    )
+    parser.add_argument(
+        "--train_size",
+        type=float,
+        default=params["TRAIN_SIZE"],
+        help="The size of the training set as a fraction of the total dataset.",
+    )
+    parser.add_argument(
+        "--val_size",
+        type=float,
+        default=params["VAL_SIZE"],
+        help="The size of the validation set as a fraction of the total dataset.",
     )
     return parser.parse_args()
