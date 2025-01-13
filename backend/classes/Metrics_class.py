@@ -1,131 +1,98 @@
-import os
-import sys
-import itertools
-import random
-import glob
-import tqdm
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, multilabel_confusion_matrix, precision_score, recall_score, f1_score, roc_auc_score, roc_curve, auc
+# Import required hyperparams
 import torch
-from torch.utils.data import Dataset, DataLoader
-import torch.nn as nn
-import torchvision
-from torchvision import transforms
-import torchvision.models as models
-from icecream import ic
+from hyperparams import out_features, disease_to_number
 
-from PIL import Image
-
-# Class for metrics
+# Importing the necessary libraries
+from matplotlib import pyplot as plt
+from torchmetrics import MetricCollection
+from torchmetrics.wrappers import MetricTracker
+from torchmetrics.classification import MulticlassConfusionMatrix, MulticlassPrecision, MulticlassRecall, MulticlassF1Score, MulticlassROC, MulticlassSpecificity, MulticlassAccuracy
 
 
-class Metrics:
-    def __init__(self, test_mode: bool = False):
-        # Lists for storing the metrics
-        self.test_mode = test_mode
-        self.y_true = None
-        self.y_pred = None
-        self.losses = []
-        self.accuracy = []
-        self.precision = []
-        self.recall = []
-        self.f1 = []
-        self.roc_auc = []
-        self.tn, self.fp, self.fn, self.tp = [], [], [], []
+# Define the metrics collection. To extend the metrics, add more metrics to the list and if the metric
+# is not scalar, add plot code to the metrics_plot function
+metrics_collection = MetricCollection([
+    MulticlassConfusionMatrix(num_classes=out_features),
+    MulticlassPrecision(num_classes=out_features),
+    MulticlassRecall(num_classes=out_features),
+    MulticlassF1Score(num_classes=out_features),
+    MulticlassROC(num_classes=out_features),
+    MulticlassSpecificity(num_classes=out_features),
+    MulticlassAccuracy(num_classes=out_features),
+])
 
-    def compute(self, y_true: torch.tensor, y_pred: torch.tensor, loss: torch.tensor = None):
-        self.y_true = y_true
-        self.y_pred = y_pred
-        if loss:
-            self._compute(loss)
-        else:
-            self._compute()
 
-    def _compute(self, loss: torch.tensor = None):
-        # Accuracy
-        self.accuracy.append(accuracy_score(self.y_true, self.y_pred))
-        # Precision
-        self.precision.append(precision_score(
-            self.y_true, self.y_pred, average='macro', zero_division=0))
-        # Recall
-        self.recall.append(recall_score(
-            self.y_true, self.y_pred, average='macro', zero_division=0))
-        # F1 Score
-        self.f1.append(f1_score(self.y_true, self.y_pred,
-                       average='macro', zero_division=0))
-        # ROC AUC
-        # self.roc_auc.append(roc_auc_score(self.y_true, self.y_pred, average='macro', multi_class="ovo"))
+def metrics_plot(train_tracker: MetricTracker, val_tracker: MetricTracker=None, save: bool = False, title1: str = "Train", title2: str = "Validation") -> None:
+    """
+    This function plots the metrics for the training and validation trackers. The function will plot the confusion matrix, ROC curve and the scalar metrics.
+    :param train_tracker: torchmetrics MetricTracker wrapper for the training metrics
+    :param val_tracker: Optional torchmetrics MetricTracker wrapper for the validation metrics
+    :param save: True if the plot should be saved, False otherwise
+    :param title1: Title to use for the first plot. Default is "Train"
+    :param title2: Title to use for the second plot. Default is "Validation"
+    :return: figure and axes for the plots
+    """
 
-        # Confusion Matrix
-        conf_matrices = multilabel_confusion_matrix(self.y_true, self.y_pred)
-        # Summing the confusion matrices
-        conf_matrix = conf_matrices.sum(axis=0)
-        # Getting the values
-        tn, fp, fn, tp = conf_matrix.ravel()
-        self.tn.append(tn)
-        self.fp.append(fp)
-        self.fn.append(fn)
-        self.tp.append(tp)
-        self.losses.append(loss.item()) if loss else None
+    # Helper function to plot the metrics
+    def _plot(tracker: MetricTracker, title: str):
+        # Get the results
+        all_results = tracker.compute_all()
 
-    def process_by_groups(self, group_size: int) -> None:
-        '''
-        Process the metrics by groups. Finds the mean of the metrics for each group\n
-        '''
-        self.losses = list(map(np.mean, np.array_split(
-            self.losses, np.arange(group_size, len(self.losses), group_size))))
-        self.accuracy = list(map(np.mean, np.array_split(
-            self.accuracy, np.arange(group_size, len(self.accuracy), group_size))))
-        self.precision = list(map(np.mean, np.array_split(
-            self.precision, np.arange(group_size, len(self.precision), group_size))))
-        self.recall = list(map(np.mean, np.array_split(
-            self.recall, np.arange(group_size, len(self.recall), group_size))))
-        self.f1 = list(map(np.mean, np.array_split(
-            self.f1, np.arange(group_size, len(self.f1), group_size))))
-        self.tp = list(map(np.mean, np.array_split(
-            self.tp, np.arange(group_size, len(self.tp), group_size))))
-        self.tn = list(map(np.mean, np.array_split(
-            self.tn, np.arange(group_size, len(self.tn), group_size))))
-        self.fp = list(map(np.mean, np.array_split(
-            self.fp, np.arange(group_size, len(self.fp), group_size))))
-        self.fn = list(map(np.mean, np.array_split(
-            self.fn, np.arange(group_size, len(self.fn), group_size))))
+        # Get figures and axes for training plots
+        fig = plt.figure(figsize=(40, 20)) # Biiiiig figure fr
+        # Create a grid for the plots - 2x2
+        grid_spec = fig.add_gridspec(2, 2)
+        # Top left
+        ax1 = fig.add_subplot(grid_spec[0, 0])
+        # Top right
+        ax2 = fig.add_subplot(grid_spec[0, 1])
+        # Bottom
+        ax3 = fig.add_subplot(grid_spec[1, :])
 
-    def __str__(self):
-        if self.test_mode:
-            return f"""            Avg loss: {np.mean(self.losses):.4f}
-                    Avg accuracy: {np.mean(self.accuracy):.4f}
-                    Avg precision: {np.mean(self.precision):.4f}
-                    Avg recall: {np.mean(self.recall):.4f}
-                    Avg f1: {np.mean(self.f1):.4f}"""
-        else:
-            f"""            Final loss: {self.losses[-1]:.4f}
-                    Final accuracy: {self.accuracy[-1]:.4f}
-                    Final precision: {self.precision[-1]:.4f}
-                    Final recall: {self.recall[-1]:.4f}
-                    Final f1: {self.f1[-1]:.4f}"""
-            # Final roc_auc: {self.roc_auc[-1]:.4f}
+        # Plot the confusion matrix. We only plot the last epoch
+        MulticlassConfusionMatrix(num_classes=out_features).plot(val=all_results[-1][f'{title}_MulticlassConfusionMatrix'], ax=ax1, labels=list(disease_to_number.keys()))
+        # Plot the ROC curve. We only plot the last epoch
+        MulticlassROC(num_classes=out_features).plot(curve=all_results[-1][f'{title}_MulticlassROC'], ax=ax2, labels=list(disease_to_number.keys()))
+        # For the remaining we plot the full history, but we need to extract the scalar values from the results
+        scalar_results = [
+            {k: v for k, v in ar.items() if isinstance(v, torch.Tensor) and v.numel() == 1} for ar in all_results
+        ]
 
-    def plot(self, save: bool = False, path: str = ".", show: bool = False):
-        fig, ax = plt.subplots(2, 2, figsize=(16, 12))
-        # Loss
-        ax[0, 0].plot(self.losses)
-        ax[0, 0].set_title('Loss')
-        # Accuracy
-        ax[0, 1].plot(self.accuracy)
-        ax[0, 1].set_title('Accuracy')
-        # Precision
-        ax[1, 0].plot(self.precision)
-        ax[1, 0].set_title('Precision')
-        # Recall
-        ax[1, 1].plot(self.recall)
-        ax[1, 1].set_title('Recall')
+        # Set the titles
+        ax1.set_title(f'{title} Confusion Matrix')
+        ax2.set_title(f'{title} ROC Curve')
+        ax3.set_title(f'{title} Metrics')
 
-        if show:
-            plt.show()
+        # Plot the metrics
+        # noinspection PyTypeChecker
+        tracker.plot(val=scalar_results, ax=ax3)
+        # Save the plot if needed
         if save:
-            plt.savefig(f"{path}/metrics.png")
+            plt.savefig(f'{title}_metrics.png')
+
+
+    if val_tracker is not None:
+        _plot(val_tracker, title2)
+    _plot(train_tracker, title1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
