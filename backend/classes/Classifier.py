@@ -47,9 +47,10 @@ class Classifier(LightningModule):
         self.log("test loss", metrics["loss"], on_epoch=True)
         self.log("test accuracy", metrics["accuracy"], on_epoch=True)
         self.log("test f1 score", metrics["f1_score"], on_epoch=True)
-        # noinspection PyTypeChecker
-        self.clearml_logger: ClearMLLogger = self.loggers[1]
-        self.clearml_logger.report_confusion_matrix(
+        # noinspection all
+        clearml_logger: ClearMLLogger = self.loggers[1]
+        # noinspection PyUnresolvedReferences
+        clearml_logger.report_confusion_matrix(
             "Confusion Matrix",
             "test",
             iteration=batch_idx,
@@ -76,12 +77,12 @@ class Classifier(LightningModule):
                 )
         # Scheduler
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-            optimizer, mode="max", factor=0.5, patience=5, threshold=0.01
+            optimizer, mode="max", factor=0.5, patience=5, threshold=0.001
         )
         scheduler_config = {
             "scheduler": scheduler,
             "monitor": "accuracy/val",
-            "interval": "epoch",
+            "interval": "epoch",  # "step" or "epoch"
             "name": "Current LR",
         }
         return {"optimizer": optimizer, "lr_scheduler": scheduler_config}
@@ -113,7 +114,7 @@ class Classifier(LightningModule):
             preds=probabilities,
             target=_labels,
             num_classes=self.num_classes,
-            task="multilabel",
+            task="multiclass",
             num_labels=self.num_classes,
         )
         f1 = f1_score(

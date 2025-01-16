@@ -11,7 +11,7 @@ from torchvision import transforms
 from backend.utility.find_mean_std import get_mean_std
 
 
-class NIH(Dataset):
+class CheXpert(Dataset):
     # Class labels
     CLASSES = [
         "Atelectasis",
@@ -93,7 +93,7 @@ class NIH(Dataset):
         # Split the labels
         labels = _label.split("|")
         # One hot encode the labels
-        _label: list[int] = [1 if L in labels else 0 for L in NIH.CLASSES]
+        _label: list[int] = [1 if L in labels else 0 for L in CheXpert.CLASSES]
         return _image, Tensor(_label)
 
     def _download_dataset(self) -> str:
@@ -144,7 +144,7 @@ class NIH(Dataset):
         Returns: The list of labels as string names.
 
         """
-        return [NIH.CLASSES[idx] for idx, L in enumerate(_label) if L == 1]
+        return [CheXpert.CLASSES[idx] for idx, L in enumerate(_label) if L == 1]
 
     @staticmethod
     def encode_label(_label: list[str]) -> Tensor:
@@ -157,13 +157,13 @@ class NIH(Dataset):
         Returns: The one-hot encoded label as a tensor.
 
         """
-        return Tensor([1 if L in _label else 0 for L in NIH.CLASSES])
+        return Tensor([1 if L in _label else 0 for L in CheXpert.CLASSES])
 
 
 if __name__ == "__main__":
     # Example usage - root_dir is the backend folder. This makes a datasets folder
     DATA_DIR = "D:\\College\\4ZP6A-capstone\\backend"
-    nih = NIH(
+    nih = CheXpert(
         root_dir=DATA_DIR,
         transform=transforms.Compose(
             [

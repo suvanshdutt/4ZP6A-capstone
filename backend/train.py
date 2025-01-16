@@ -77,12 +77,15 @@ def main():
     args = parse_arguments(parser)
     # Initialize the ClearML task
     task = Task.init(
-        project_name="4ZP6A-capstone", task_name="NIH Training", output_uri=False
+        project_name="4ZP6A-capstone",
+        task_name="CheXpert Training",
+        output_uri=False,
+        reuse_last_task_id=False,
     )
     # Load the data with the transformations
     transform: Compose = Compose(
         [
-            # Convert to 1 channel - some images are 4 channels, some 3 but all grayscale
+            # Convert to 1 channel
             Grayscale(num_output_channels=3),
             Resize(
                 (args.image_size, args.image_size),

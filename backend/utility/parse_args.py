@@ -107,9 +107,9 @@ def parse_arguments(parser: ArgumentParser) -> Namespace:
         help="The size of the training set as a fraction of the total dataset.",
     )
     parser.add_argument(
-        "--val_size",
+        "--test_size",
         type=float,
-        default=params["VAL_SIZE"],
+        default=params["TEST_SIZE"],
         help="The size of the validation set as a fraction of the total dataset.",
     )
     return parser.parse_args()

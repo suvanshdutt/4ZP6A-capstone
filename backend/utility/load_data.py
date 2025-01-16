@@ -1,7 +1,9 @@
 from argparse import Namespace
+from decimal import Decimal
+
 from torch.utils.data import DataLoader, random_split
 from torchvision.transforms import Compose
-from backend.classes.NIH_Dataset import NIH
+from backend.classes.CheXpert_Dataset import CheXpert
 
 
 def load_data(
@@ -19,17 +21,23 @@ def load_data(
     """
 
     # Load the data
-    train_val_dataset: NIH = NIH(
+    train_test_dataset: CheXpert = CheXpert(
         root_dir=_args.root_dir, train=True, transform=_transforms
     )
-    test_dataset: NIH = NIH(root_dir=_args.root_dir, train=False, transform=_transforms)
+    val_dataset: CheXpert = CheXpert(
+        root_dir=_args.root_dir, train=False, transform=_transforms
+    )
     # Split the training dataset into train and validation
-    train_dataset, val_dataset, _ = random_split(
-        train_val_dataset,
+    train_dataset, test_dataset, _ = random_split(
+        train_test_dataset,
         lengths=[
             _args.train_size,
-            _args.val_size,
-            int(1 - _args.train_size - _args.val_size),
+            _args.test_size,
+            float(
+                Decimal(1)
+                - Decimal(str(_args.train_size))
+                - Decimal(str(_args.test_size))
+            ),
         ],
     )
     print(f"Training dataset size: {len(train_dataset)}")

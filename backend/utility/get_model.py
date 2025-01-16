@@ -1,6 +1,6 @@
 from argparse import Namespace
 from backend.classes.Classifier import Classifier
-from backend.classes.Models import EfficientNet, ResNet
+from backend.classes.Models import EfficientNet, ResNet, DenseNet
 
 
 def get_model(args: Namespace) -> Classifier:
@@ -11,7 +11,10 @@ def get_model(args: Namespace) -> Classifier:
         case "resnet":
             model = ResNet(args.num_classes, args.model_name, args.pretrained)
             return Classifier(model, args)
+        case "densenet":
+            model = DenseNet(args.num_classes, args.model_name, args.pretrained)
+            return Classifier(model, args)
         case _:
             raise ValueError(
-                "Invalid model architecture. Please choose either EfficientNet or ResNet."
+                "Invalid model architecture. Please choose either EfficientNet, ResNet or DenseNet."
             )
