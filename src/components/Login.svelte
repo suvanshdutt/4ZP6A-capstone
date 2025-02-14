@@ -1,28 +1,52 @@
 <script lang="ts">
-    import Header from "../shared/Header.svelte";
     import Button from "../shared/Button.svelte";
 
+    let email = "";
+    let password = "";
 
-    
+    async function login() {
+        const payload = {
+            action: "login",
+            _username: email,
+            user_pass: password
+        };
+
+        try {
+            const response = await fetch("/api/auth", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Login successful! Redirecting to dashboard...");
+                window.location.href = "/dashboard"; // Redirect user after login
+            } else {
+                alert(`Error: ${data.error}`);
+            }
+        } catch (error) {
+            console.error("Login failed:", error);
+            alert("Something went wrong. Please try again.");
+        }
+    }
 </script>
 
 <main>
     <div class="login-form">
         <div class="form-left">
-            <h1>Full Name</h1>
-            <input type="text" placeholder="John Smith" />
-
             <h1>Email</h1>
-            <input type="email" placeholder="Johnsmith@gmail.com" />
+            <input type="email" placeholder="Johnsmith@gmail.com" bind:value={email} />
 
             <h1>Password</h1>
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Password" bind:value={password} />
 
             <div class="forgot-password">
                 <a href="/">Forgot password?</a>
             </div>
 
-            <button class="login-btn">Login</button>
+            <button class="login-btn" on:click|preventDefault={login}>Login</button>
         </div>
 
         <!-- Divider Line -->

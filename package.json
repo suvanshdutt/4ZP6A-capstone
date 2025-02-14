@@ -21,6 +21,10 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-auto": "^3.2.5",
-		"my-svelte-project": "file:"
+		"bcrypt": "^5.1.1",
+		"dotenv": "^16.4.7",
+		"mongodb": "^6.13.0",
+		"my-svelte-project": "file:",
+		"sharp": "^0.33.5"
 	}
 }

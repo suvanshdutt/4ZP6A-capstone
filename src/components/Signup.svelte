@@ -1,4 +1,37 @@
-<script></script>
+<script>
+    let fullName = "";
+    let email = "";
+    let password = "";
+
+    async function signup() {
+        const payload = {
+            _username: email, // Using email as the username
+            user_pass: password,
+            fullName: fullName // Optional
+        };
+
+        try {
+            // Call SvelteKit's backend API
+            const response = await fetch("/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Sign-up successful! Redirecting to login...");
+                window.location.href = "/login"; // Redirect user to login page
+            } else {
+                alert(`Error: ${data.error}`);
+            }
+        } catch (error) {
+            console.error("Signup failed:", error);
+            alert("Something went wrong. Please try again.");
+        }
+    }
+</script>
 
 <main>
     <div class="signup-form">
@@ -6,15 +39,15 @@
             <h1>Sign Up</h1>
 
             <h2>Full Name</h2>
-            <input placeholder="John Smith" type="text"/>
+            <input placeholder="John Smith" type="text" bind:value={fullName} />
 
             <h2>Email</h2>
-            <input placeholder="Johnsmith@gmail.com" type="email"/>
+            <input placeholder="Johnsmith@gmail.com" type="email" bind:value={email} />
 
             <h2>Password</h2>
-            <input placeholder="Password" type="password"/>
+            <input placeholder="Password" type="password" bind:value={password} />
 
-            <button class="signup-btn">Sign Up</button>
+            <button class="signup-btn" on:click|preventDefault={signup}>Sign Up</button>
 
             <div class="or-divider">
                 <span></span>
@@ -24,13 +57,13 @@
 
             <div class="social-login">
                 <button class="social-btn">
-                    <img alt="Google" src="/Images/google.png"/>
+                    <img alt="Google" src="/Images/google.png" />
                 </button>
                 <button class="social-btn">
-                    <img alt="Facebook" src="/Images/Facebook.png"/>
+                    <img alt="Facebook" src="/Images/Facebook.png" />
                 </button>
                 <button class="social-btn">
-                    <img alt="Linkedin" src="/Images/Linkedin.png"/>
+                    <img alt="Linkedin" src="/Images/Linkedin.png" />
                 </button>
             </div>
 
@@ -40,7 +73,6 @@
         </div>
     </div>
 </main>
-
 <style>
     :global(body) {
         background-color: #fceceb;
