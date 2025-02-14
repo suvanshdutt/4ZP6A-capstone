@@ -1,0 +1,24 @@
+Connected the database using MongoDB Atlas.
+
+Added basic functionality to signup.svelte, login.svelte, and dashboard.svelte.
+
+Implemented dynamic elements in dashboard.svelte, including:
+- A report table displaying patient details and previously uploaded documents.
+
+Implemented API routes:
+- api/auth: Handles login functionality with session management using JSON Web Tokens (jsonwebtoken).
+- api/signup: Manages user registration with password hashing using bcrypt.
+- api/user: Fetches user details for dashboard dynamic elements using MongoClient.
+- api/upload: Handles image uploads with compression using sharp and stores them in MongoDB.
+- api/reports: Updates the user report table dynamically.
+
+Optimized MongoDB queries to improve dashboard performance using MongoClient.
+Added detailed documentation at the top of each route for clarity.
+
+Dependencies added:
+- bcrypt: For secure password hashing.
+- jsonwebtoken: For authentication and session management.
+- mongodb: For database interactions using MongoClient.
+- sharp: For image compression and processing.
+
+Next steps: Connect the AI model server, improve API error handling, add crucial security and functionality alongside quality-of-life improvements.
