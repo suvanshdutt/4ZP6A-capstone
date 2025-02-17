@@ -41,7 +41,7 @@
  */
 
 
-
+import type{ RequestEvent } from "@sveltejs/kit";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcrypt"; 
 import { json } from "@sveltejs/kit";
@@ -50,7 +50,7 @@ import { json } from "@sveltejs/kit";
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority"; // MongoDB URI
 
-export async function POST({ request, cookies }) { // POST function
+export async function POST({ request, cookies }: RequestEvent) { // POST function
     const { action, _username, user_pass, fullName } = await request.json(); // Parse request body
 
     if (!_username || !user_pass) {

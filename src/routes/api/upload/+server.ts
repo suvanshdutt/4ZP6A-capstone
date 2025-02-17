@@ -48,6 +48,7 @@
 import { MongoClient, Binary } from "mongodb";
 import { json } from "@sveltejs/kit";
 import sharp from "sharp";
+import type { RequestEvent } from "@sveltejs/kit";
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority"; 
 const DATABASE_NAME = "ChestXraydb";
@@ -62,8 +63,19 @@ async function connectDB() {
     return client.db(DATABASE_NAME);
 
 }
+interface ImageData {
+    filename: string;
+    data: Binary;
+    predictions: number[]; // AI model results
+    timestamp: Date;
+}
 
-export async function POST({ request, cookies }) {
+interface UserDocument {
+    _username: string;
+    images?: ImageData[];
+}
+
+export async function POST({ request, cookies }:RequestEvent) {
     // ✅ Parse session from cookies
     const sessionCookie = cookies.get("session");
     if (!sessionCookie) {
@@ -109,7 +121,7 @@ export async function POST({ request, cookies }) {
         const db = await connectDB();
         const users = db.collection("users");
 
-        const newImage = {
+        const newImage: ImageData = {
             filename: file.name, // Store original filename
             data: new Binary(compressedBuffer), // Store as binary data
             predictions: [], // Empty array for AI model results
@@ -119,7 +131,7 @@ export async function POST({ request, cookies }) {
         // Push new image into user's images array
         const updateResult = await users.updateOne(
             { _username: username },
-            { $push: { images: newImage } }
+            { $push: { images: { $each: [newImage] } } } as any
         );
 
         if (updateResult.modifiedCount > 0) {

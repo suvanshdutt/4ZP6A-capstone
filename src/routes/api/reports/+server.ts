@@ -38,14 +38,27 @@
  */
 
 
-
+import type { RequestEvent } from "@sveltejs/kit"; // type import
 import { MongoClient } from "mongodb";
 import { json } from "@sveltejs/kit";
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority"; // MongoDB URI
 const client = new MongoClient(MONGO_URI); 
 
-export async function GET({ cookies }) {
+interface ImageData {
+    filename?: string;
+    timestamp?: string; // Ensure timestamp is a string
+}
+
+interface Report {
+    date: string;
+    filename: string;
+    patientName: string;
+    status: string;
+    timestamp: string; // Needed for sorting
+}
+
+export async function GET({ cookies }: RequestEvent) {
     const sessionToken = cookies.get("session");
 
     if (!sessionToken) {
@@ -65,14 +78,20 @@ export async function GET({ cookies }) {
         }
 
         // Get images sorted by timestamp (newest first)
-        const reports = (user.images || [])
-            .map((img) => ({
-                date: img.timestamp ? new Date(img.timestamp).toLocaleDateString() : "Unknown", // Using timestamp
-                filename: img.filename || "Unknown",
-                patientName: sessionData.fullName, // Extracted from session cookie
-                status: "Pending", // Placeholder TODO : Will need this for when the AI model is connected. 
-            }))
-            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort by newest first
+        const reports: Report[] = (user.images || []).map((img: ImageData): Report => ({
+            date: img.timestamp ? new Date(img.timestamp).toLocaleDateString() : "Unknown",
+            filename: img.filename || "Unknown",
+            patientName: sessionData.fullName,
+            status: "Pending",
+            timestamp: img.timestamp || "", // Ensure string type for sorting
+        }));
+
+        // Sort by timestamp (newest first)
+        reports.sort((a: Report, b: Report) => {
+            const timeA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+            const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+            return timeB - timeA; 
+        });
 
         return json({ reports, totalReports: reports.length });
     } catch (error) {

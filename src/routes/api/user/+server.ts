@@ -26,11 +26,12 @@
 
 import { MongoClient } from "mongodb";
 import { json } from "@sveltejs/kit";
+import type { RequestEvent } from "@sveltejs/kit";
 
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority";
 
-export async function GET({ cookies }) {
+export async function GET({ cookies }:RequestEvent) {
     const session = cookies.get("session");
 
     if (!session) {

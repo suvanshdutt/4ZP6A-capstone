@@ -39,7 +39,9 @@ import bcrypt from "bcrypt";
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority";
 
-export async function POST({ request }) {
+import type { RequestEvent } from "@sveltejs/kit";
+
+export async function POST({ request }: RequestEvent) {
     const { _username, user_pass, fullName } = await request.json(); // Added fullName
 
     if (!_username || !user_pass || !fullName) {
