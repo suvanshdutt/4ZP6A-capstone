@@ -52,21 +52,20 @@ import type { RequestEvent } from "@sveltejs/kit";
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority"; 
 const DATABASE_NAME = "ChestXraydb";
+const HF_SPACE_URL = "https://chestanalysis-dense121.hf.space"; // Space URL
 
-// Allowed MIME types
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-// Connect to MongoDB
 async function connectDB() {
     const client = new MongoClient(MONGO_URI);
     await client.connect();
     return client.db(DATABASE_NAME);
-
 }
+
 interface ImageData {
     filename: string;
     data: Binary;
-    predictions: number[]; // AI model results
+    predictions: number[];
     timestamp: Date;
 }
 
@@ -75,8 +74,30 @@ interface UserDocument {
     images?: ImageData[];
 }
 
-export async function POST({ request, cookies }:RequestEvent) {
-    // ✅ Parse session from cookies
+async function pollForResult(eventId: string): Promise<any> {
+    const pollUrl = `${HF_SPACE_URL}/gradio_api/call/predict/${eventId}`;
+
+    for (let attempt = 0; attempt < 30; attempt++) { // Poll for up to 30 seconds
+        const response = await fetch(pollUrl, {
+            method: "GET",
+            headers: { "Accept": "application/json" }
+        });
+
+        if (response.ok) {
+            const text = await response.text();
+            if (text.includes("event: complete")) {
+                const jsonString = text.split("data: ")[1];
+                return JSON.parse(jsonString);
+            }
+        }
+
+        await new Promise((res) => setTimeout(res, 1000)); // Wait 1s before retrying
+    }
+
+    throw new Error("Polling timed out");
+}
+
+export async function POST({ request, cookies }: RequestEvent) {
     const sessionCookie = cookies.get("session");
     if (!sessionCookie) {
         return json({ error: "Not authenticated" }, { status: 401 });
@@ -85,7 +106,7 @@ export async function POST({ request, cookies }:RequestEvent) {
     let session;
     try {
         session = JSON.parse(sessionCookie);
-    } catch (error) {
+    } catch {
         return json({ error: "Invalid session data" }, { status: 400 });
     }
 
@@ -94,7 +115,6 @@ export async function POST({ request, cookies }:RequestEvent) {
         return json({ error: "Session missing username" }, { status: 400 });
     }
 
-    // ✅ Get uploaded file
     const data = await request.formData();
     const file = data.get("file");
 
@@ -107,40 +127,101 @@ export async function POST({ request, cookies }:RequestEvent) {
     }
 
     try {
-        // ✅ Convert file to buffer
         const arrayBuffer = await file.arrayBuffer();
         const inputBuffer = Buffer.from(arrayBuffer);
 
-        // ✅ Compress image using sharp
         const compressedBuffer = await sharp(inputBuffer)
-            .resize(512) // Resize to 512px width
-            .jpeg({ quality: 70 }) // Convert to JPEGz
+            .resize(512)
+            .jpeg({ quality: 70 })
             .toBuffer();
 
-        // ✅ Connect to DB & store image
         const db = await connectDB();
-        const users = db.collection("users");
+        const users = db.collection<UserDocument>("users");
 
         const newImage: ImageData = {
-            filename: file.name, // Store original filename
-            data: new Binary(compressedBuffer), // Store as binary data
-            predictions: [], // Empty array for AI model results
-            timestamp: new Date() // Current timestamp
+            filename: file.name,
+            data: new Binary(compressedBuffer),
+            predictions: [],
+            timestamp: new Date()
         };
 
-        // Push new image into user's images array
         const updateResult = await users.updateOne(
             { _username: username },
-            { $push: { images: { $each: [newImage] } } } as any
+            { $push: { images: newImage } as any }
         );
+        const base64Image = Buffer.from(newImage.data.buffer).toString("base64");
+        
 
-        if (updateResult.modifiedCount > 0) {
-            return json({ message: "Upload successful" }, { status: 201 });
-        } else {
+        if (updateResult.modifiedCount === 0) {
             return json({ error: "User not found or image not saved" }, { status: 404 });
         }
+
+        console.log(" Image saved to MongoDB. Sending to Hugging Face...");
+
+        // Step 1: Send Base64 image to Hugging Face API
+        const hfInitResponse = await fetch(`${HF_SPACE_URL}/gradio_api/call/predict`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ data: [base64Image] }) 
+        });
+
+        if (!hfInitResponse.ok) {
+            console.error("Hugging Face API Error:", await hfInitResponse.text());
+            return json({ error: "Hugging Face request failed" }, { status: 500 });
+        }
+
+        const initResult = await hfInitResponse.json();
+        const eventId = initResult.event_id;
+
+        if (!eventId) {
+            console.error(" ERROR: Hugging Face API did not return an event_id");
+            return json({ error: "Failed to retrieve event_id from Hugging Face" }, { status: 500 });
+        }
+
+        console.log("EVENT_ID retrieved:", eventId);
+
+
+        const predictionResponse = await fetch(`${HF_SPACE_URL}/gradio_api/call/predict/${eventId}`, {
+            method: "GET",
+            headers: { "Accept": "application/json" }
+        });
+        
+
+        
+        if (!predictionResponse.ok) {
+            console.error("ERROR: Failed to fetch prediction from Hugging Face");
+            return json({ error: "Failed to fetch prediction" }, { status: 500 });
+        }
+        
+        
+        // Read response as text since it's not standard JSON
+        const textResponse = await predictionResponse.text();
+        console.log("Raw API Response:", textResponse);
+        
+        //  Extract JSON part manually
+        const match = textResponse.match(/data:\s*(\[.*\])/s);
+        if (!match) {
+            console.error("ERROR: Failed to extract JSON from response");
+            return json({ error: "Invalid API response format" }, { status: 500 });
+        }
+        
+        const jsonData = JSON.parse(match[1]); // Extract JSON array
+        console.log("Prediction received:", Object.values(jsonData[0].predictions)) ;
+        
+        // Update predictions in MongoDB
+        await users.updateOne(
+            { _username: username, "images.filename": file.name },
+            { $set: { "images.$.predictions": Object.values(jsonData[0].predictions) } as any }// Extract predictions object
+        );
+        
+        return json({ message: "Upload and prediction successful", prediction: jsonData[0].predictions }, { status: 201 })
+
     } catch (error) {
-        console.error("Upload error:", error);
+        console.error("Error:", error);
         return json({ error: "Internal server error" }, { status: 500 });
     }
 }
+
+
