@@ -18,6 +18,7 @@
                --secondary_color:{$theme.secondary_color};
                --font_size:{fontSize}px;
                --grey:{$theme.grey_text};"
+               {...$$restProps}
         >
     <slot></slot>
 </button>
@@ -37,7 +38,7 @@
         border: black solid 1px;
         border-radius: 16px;
         transition: 0s background-color color border;
-
+        cursor: pointer;
     }
     .inverse{
         border: var(--primary_color) solid 1px;

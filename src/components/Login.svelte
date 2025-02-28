@@ -3,6 +3,11 @@
 
     let email = "";
     let password = "";
+    let showPassword = false;
+
+    function togglePassword(){
+        showPassword = !showPassword;
+    }
 
     async function login() {
         const payload = {
@@ -36,37 +41,74 @@
 <main>
     <div class="login-form">
         <div class="form-left">
-            <h1>Email</h1>
+            <h1>Login</h1>
+            <h2>Email</h2>
             <input type="email" placeholder="Johnsmith@gmail.com" bind:value={email} />
 
-            <h1>Password</h1>
-            <input type="password" placeholder="Password" bind:value={password} />
+            <h2>Password</h2>
+            <div class="password">
+                {#if showPassword}
+                    <input
+                        type="text"
+                        placeholder="Password"
+                        bind:value={password}
+                    />
+                {:else}
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        bind:value={password}
+                    />
+                {/if}
 
+                <button type="button" class="eye-icon" on:click={togglePassword}>
+                    <svg class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        {#if showPassword}
+                            <!-- Eye open icon -->
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        {:else}
+                            <!-- Eye closed icon -->
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                            <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                            <line x1="2" x2="22" y1="2" y2="22"></line>
+                        {/if}
+                    </svg>
+                </button>
+            </div>
             <div class="forgot-password">
                 <a href="/">Forgot password?</a>
             </div>
 
-            <button class="login-btn" on:click|preventDefault={login}>Login</button>
-        </div>
-
-        <!-- Divider Line -->
-        <div class="divider-line"></div>
-
-        <div class="form-right">
-            <h2>Rules for password</h2>
-            <ul>
-                <li>8 characters or longer</li>
-                <li>Must contain 1 special character</li>
-                <li>Must contain at least 6 letters</li>
-                <li>Must contain at least 1 number</li>
-            </ul>
+            <Button on:click={login} style="display:block; width: 60%; font-size: 24px; padding: 15px; margin: auto">Login</Button>
+            
+            <div class="or-divider">
+                <span></span>
+                <p>or login with</p>
+                <span></span>
+            </div>
+            
+            <div class="social-login">
+                <button class="social-btn">
+                    <img alt="Google" style="width: 60px; height: 60px" src="/Images/google.png" />
+                </button>
+                <button class="social-btn">
+                    <img alt="Facebook" src="/Images/Facebook.png" />
+                </button>
+                <button class="social-btn">
+                    <img alt="Linkedin" style="width: 53px; height: 53px" src="/Images/Linkedin.png" />
+                </button>
+            </div>
         </div>
     </div>
 </main>
 
 <style>
     :global(body) {
-        background-color: var(--background_color); /* Pinkish background */
+        background-color: var(--background_color);
         color: var(--text_color);
         font-family: 'Montserrat', sans-serif;
         margin: 0;
@@ -76,30 +118,42 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        margin-top: -10vh;
+        height: 90vh;
+        padding: 0 20px;
+        background-color: var(--background_color);
+        margin-top: 0;
     }
 
     .login-form {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 1200px;
-        background-color: var(--background_color); /* Pinkish background */
+        background-color: var(--background_color);
         padding: 40px;
         border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Drop shadow */
+        width: 100%;
+        max-width: 600px;
     }
 
-    .form-left, .form-right {
-        width: 48%;
+    .form-left {
+        text-align: center;
+        width: 100%;
+        margin: 20px 20px 20px 20px;
+        background-color: var(--background_color);
     }
 
-    h1, h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
+    h1 {
+        font-size: 28px;
         color: #333;
         font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+        text-align: left;
+        margin-bottom: 10px;
     }
 
     input {
@@ -112,54 +166,59 @@
         outline: none;
     }
 
+    .password {
+        position: relative;
+    }
+
+    .eye-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        right: -15px;
+        top: 7.5px;
+    }
+
     .forgot-password {
         text-align: right;
         margin-bottom: 20px;
     }
 
     .forgot-password a {
-        color: red;
+        color: var(--primary_color);
         text-decoration: none;
     }
 
-    .login-btn {
-        display: block;
-        width: 100%;
-        background-color: #f03e3e;
-        color: white;
-        padding: 15px;
-        font-size: 18px;
-        font-weight: bold;
+    .or-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        color: #333;
+    }
+
+    .or-divider span {
+        width: 40px;
+        height: 1px;
+        background-color: #333;
+        margin: 0 10px;
+    }
+
+    .social-login {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .social-btn {
+        background-color: transparent;
         border: none;
-        border-radius: 10px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
     }
 
-    .login-btn:hover {
-        background-color: #d33d3d;
-    }
-
-    /* Divider Line Styling */
-    .divider-line {
-        width: 50px;
-        height: 100%; 
-        background-color: #333; 
-        margin: 0 40px;  
-    }
-
-    .form-right {
-        background-color: #fceceb; 
-        padding-left: 80px; 
-    }
-
-    ul {
-        list-style-type: disc; /* Bullet points */
-        padding-left: 20px;
-    }
-
-    ul li {
-        font-size: 18px;
-        margin-bottom: 10px;
+    .social-btn img {
+        width: 40px;
+        height: 40px;
     }
 </style>

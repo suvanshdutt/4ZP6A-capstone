@@ -36,15 +36,15 @@
     align-items: center; /* Vertically centers items */
     gap: 200px; /* Adjust spacing between the elements */
     flex-wrap: wrap; /* Allows items to wrap if the screen is smaller */
-}
+    }
 
-.dpb {
-    flex: 1; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    margin-top: 20px; 
-}
+    .dpb {
+        flex: 1; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        margin-top: 20px; 
+    }
 
     main {
         margin-top: 15vh;
