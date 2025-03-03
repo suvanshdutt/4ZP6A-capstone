@@ -1,9 +1,48 @@
-<script>
+<script lang="ts">
+    import Button from "../shared/Button.svelte";
+    
     let fullName = "";
     let email = "";
     let password = "";
+    let passwordError = "";
+    let showPassword = false;
+
+    function togglePassword(){
+        showPassword = !showPassword;
+    }
+
+    function validatePassword(password: string): boolean {
+        const lengthRequirement = /.{8,}/;
+        const specialCharRequirement = /[!@#$%^&*(),.?":{}|<>]/;
+        const uppercaseRequirement = /[A-Z]/; // At least 1 uppercase letter
+        const numberRequirement = /[0-9]/;
+
+        if (!lengthRequirement.test(password)) {
+            passwordError = "Password must be at least 8 characters long.";
+            return false;
+        }
+        if (!specialCharRequirement.test(password)) {
+            passwordError = "Password must contain at least 1 special character.";
+            return false;
+        }
+        if (!uppercaseRequirement.test(password)) {
+            passwordError = "Password must contain at least 1 uppercase letter.";
+            return false;
+        }
+        if (!numberRequirement.test(password)) {
+            passwordError = "Password must contain at least 1 number.";
+            return false;
+        }
+
+        passwordError = "";
+        return true;
+    }
 
     async function signup() {
+        if (!validatePassword(password)) {
+            return;
+        }
+
         const payload = {
             _username: email, // Using email as the username
             user_pass: password,
@@ -35,47 +74,77 @@
 
 <main>
     <div class="signup-form">
-        <div class="form-left">
+        <div class="title">
             <h1>Sign Up</h1>
+        </div>
+        <div class="form-container">
+            <div class="form-left">
+                <h2>Full Name</h2>
+                <input placeholder="John Smith" type="text" bind:value={fullName} />
 
-            <h2>Full Name</h2>
-            <input placeholder="John Smith" type="text" bind:value={fullName} />
+                <h2>Email</h2>
+                <input placeholder="Johnsmith@gmail.com" type="email" bind:value={email} />
 
-            <h2>Email</h2>
-            <input placeholder="Johnsmith@gmail.com" type="email" bind:value={email} />
+                <h2>Password</h2>
+                <div class="password">
+                    {#if showPassword}
+                        <input
+                            type="text"
+                            placeholder="Password"
+                            bind:value={password}
+                        />
+                    {:else}
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            bind:value={password}
+                        />
+                    {/if}
 
-            <h2>Password</h2>
-            <input placeholder="Password" type="password" bind:value={password} />
+                    <button type="button" class="eye-icon" on:click={togglePassword}>
+                        <svg class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            {#if showPassword}
+                                <!-- Eye open icon -->
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            {:else}
+                                <!-- Eye closed icon -->
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                <line x1="2" x2="22" y1="2" y2="22"></line>
+                            {/if}
+                        </svg>
+                    </button>
+                </div>
 
-            <button class="signup-btn" on:click|preventDefault={signup}>Sign Up</button>
+                {#if passwordError}
+                    <p class="error">{passwordError}</p>
+                {/if}
 
-            <div class="or-divider">
-                <span></span>
-                <p>or sign up with</p>
-                <span></span>
+                <Button on:click={signup} style="display:block; width: 60%; font-size: 24px; padding: 15px; margin: auto; margin-top: 20px">Sign Up</Button>
+
+                <p class="login-link">
+                    Already have an account? <a href="/login">Login</a>
+                </p>
             </div>
-
-            <div class="social-login">
-                <button class="social-btn">
-                    <img alt="Google" src="/Images/google.png" />
-                </button>
-                <button class="social-btn">
-                    <img alt="Facebook" src="/Images/Facebook.png" />
-                </button>
-                <button class="social-btn">
-                    <img alt="Linkedin" src="/Images/Linkedin.png" />
-                </button>
+            <div class="form-right">
+                <h2>Rules for password</h2>
+                <ul>
+                    <li>8 characters or longer</li>
+                    <li>Must contain 1 special character</li>
+                    <li>Must contain at least 1 uppercase letter</li>
+                    <li>Must contain at least 1 number</li>
+                </ul>
             </div>
-
-            <p class="login-link">
-                Already have an account? <a href="/login">Login</a>
-            </p>
         </div>
     </div>
 </main>
 <style>
     :global(body) {
-        background-color: #fceceb;
+        background-color: var(--background_color);
         color: var(--text_color, #1e1e1e);
         font-family: 'Montserrat', sans-serif;
         margin: 0;
@@ -85,23 +154,43 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 90vh;
-        padding: 0 20px;
-        background-color: #fceceb;
-        margin-top: 0;
+        height: 100vh;
+        background-color: var(--background_color);
+        margin-top: -10vh;
     }
 
     .signup-form {
-        background-color: #fceceb;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 65%;
+        max-width: 1000px;
+        background-color: var(--background_color); 
         padding: 40px;
         border-radius: 15px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Drop shadow */
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .form-container {
+        display: flex; 
+        flex-direction: row;
+        justify-content: space-between;
         width: 100%;
-        max-width: 600px;
+        margin-top: 20px;
     }
 
     .form-left {
-        text-align: center;
+        width: 50%;
+    }
+
+    .form-right{
+        padding-left: 80px;
+        width: 45%
     }
 
     h1 {
@@ -121,7 +210,7 @@
 
     input {
         width: 100%;
-        padding: 12px;
+        padding: 10px;
         font-size: 16px;
         margin-bottom: 20px;
         border: 1px solid #333;
@@ -129,63 +218,44 @@
         outline: none;
     }
 
-    .signup-btn {
-        width: 100%;
-        background-color: #f03e3e;
-        color: white;
-        padding: 15px;
-        font-size: 18px;
-        font-weight: bold;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+    .password {
+        position: relative;
     }
 
-    .signup-btn:hover {
-        background-color: #d33d3d;
-    }
-
-    .or-divider {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 20px 0;
-        color: #333;
-    }
-
-    .or-divider span {
-        width: 40px;
-        height: 1px;
-        background-color: #333;
-        margin: 0 10px;
-    }
-
-    .social-login {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .social-btn {
-        background-color: transparent;
+    .eye-icon {
+        background: none;
         border: none;
         cursor: pointer;
+        position: absolute;
+        right: -15px;
+        top: 7.5px;
     }
 
-    .social-btn img {
-        width: 40px;
-        height: 40px;
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-top: -10px;
+        margin-bottom: 10px;
     }
 
     .login-link {
         font-size: 16px;
         color: #333;
+        margin-top: 50px;
     }
 
     .login-link a {
         color: #f03e3e;
         text-decoration: none;
+    }
+
+    ul {
+        list-style-type: disc; /* Bullet points */
+        padding-left: 20px;
+    }
+
+    ul li {
+        font-size: 18px;
+        margin-bottom: 10px;
     }
 </style>
