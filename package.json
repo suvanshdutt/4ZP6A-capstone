@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"engines": {
-		"node": "18"
+		"node": "20.16.0"
 	},
 	"scripts": {
 		"dev": "vite dev",
@@ -28,8 +28,9 @@
 		"@sveltejs/adapter-auto": "^3.2.5",
 		"bcrypt": "^5.1.1",
 		"dotenv": "^16.4.7",
-		"mongodb": "^6.13.0",
+		"mongodb": "^6.14.2",
 		"my-svelte-project": "file:",
-		"sharp": "^0.33.5"
+		"sharp": "^0.33.5",
+		"uuid": "^11.1.0"
 	}
 }

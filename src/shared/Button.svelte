@@ -18,7 +18,7 @@
                --secondary_color:{$theme.secondary_color};
                --font_size:{fontSize}px;
                --grey:{$theme.grey_text};"
-               {...$$restProps}
+        {...$$restProps}
         >
     <slot></slot>
 </button>

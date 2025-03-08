@@ -49,6 +49,7 @@ import { MongoClient, Binary } from "mongodb";
 import { json } from "@sveltejs/kit";
 import sharp from "sharp";
 import type { RequestEvent } from "@sveltejs/kit";
+import { v4 as uuidv4 } from 'uuid';
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority"; 
 const DATABASE_NAME = "ChestXraydb";
@@ -63,10 +64,12 @@ async function connectDB() {
 }
 
 interface ImageData {
+    uid: string,
     filename: string;
     data: Binary;
     predictions: number[];
     timestamp: Date;
+    status: string;
 }
 
 interface UserDocument {
@@ -138,11 +141,15 @@ export async function POST({ request, cookies }: RequestEvent) {
         const db = await connectDB();
         const users = db.collection<UserDocument>("users");
 
+        const uniqueId = uuidv4();
+
         const newImage: ImageData = {
+            uid: uniqueId,
             filename: file.name,
             data: new Binary(compressedBuffer),
             predictions: [],
-            timestamp: new Date()
+            timestamp: new Date(),
+            status: "Pending"
         };
 
         const updateResult = await users.updateOne(
@@ -212,8 +219,12 @@ export async function POST({ request, cookies }: RequestEvent) {
         
         // Update predictions in MongoDB
         await users.updateOne(
-            { _username: username, "images.filename": file.name },
-            { $set: { "images.$.predictions": Object.values(jsonData[0].predictions) } as any }// Extract predictions object
+            { _username: username, "images.uid": uniqueId, "images.filename": file.name},
+            { 
+                $set: { 
+                    "images.$.predictions": Object.values(jsonData[0].predictions),
+                    "images.$.status": "Completed"
+                } as any }// Extract predictions object
         );
         
         return json({ message: "Upload and prediction successful", prediction: jsonData[0].predictions }, { status: 201 })

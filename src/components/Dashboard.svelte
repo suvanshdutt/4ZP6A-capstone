@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
     import { onMount } from "svelte";
     import Button from "../shared/Button.svelte";
 
     // Data variables
-    let fileInput;
+    let fileInput: any;
     let user = { fullName: "Loading..." };
-    let reports = [];
-    let selectedFile = null;
+    let reports:any[] = [];
+    let selectedFile:any = null;
     let uploadMessage = "";
     let totalReports = 0;
 
@@ -41,13 +41,13 @@
         }
     }
     // Standard triggerFileSelect function to open file dialog, NOT AFFILIATED WITH API DIRECTLY
-    function triggerFileSelect(event) {
+    function triggerFileSelect(event: any) {
         event.preventDefault();
         fileInput.click();
     }
 
     // Handle file change event uses api/upload to upload file
-    function handleFileChange(event) {
+    function handleFileChange(event: any) {
         const file = event.target.files[0];
         if (file) {
             if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
@@ -79,6 +79,7 @@
             if (response.ok) {
                 uploadMessage = "Upload successful!";
                 selectedFile = null;
+                await fetchReports();
             } else {
                 uploadMessage = `Upload failed: ${result.error}`;
             }
@@ -87,6 +88,12 @@
             console.error("Upload error:", error);
         }
     }
+
+    function ViewResult(report:any) {
+        window.location.href = `/result?id=${report.uid}`;
+    }
+
+
     onMount(() => {
         fetchUserData();
         fetchReports();
@@ -143,16 +150,16 @@
             <main class="flex-1 p-6">
                 <section class="bg-white rounded-lg shadow-lg p-6 mb-6">
                     <h2 class="text-xl font-bold text-red-500 mb-4">Upload X-Ray</h2>
-                    <div class="border-dashed border-2 border-red-500 rounded-lg p-10 text-center shadow hover:shadow-xl transition">
-                        <p class="text-gray-600 mb-4">Drag and drop your X-Ray files here</p>
+                    <div class="border-dashed border-2 border-red-500 rounded-lg pt-10 pb-6 text-center custom-shadow hover:shadow-xl transition">
+                        <p class="text-gray-600 mb-4">Upload your X-Ray files here</p>
                         <!-- Button to trigger file select -->
                         <!-- Uses the api route api/upload to upload the file -->
 
-                        <Button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition" on:click={triggerFileSelect}>Browse Files</Button>
+                        <Button on:click={triggerFileSelect}>Browse Files</Button>
                         <input type="file" class="hidden" bind:this={fileInput} on:change={handleFileChange} accept="image/jpeg, image/png, image/webp" />
-                        <p class="text-gray-500 mt-2">{uploadMessage}</p>
+                        <p class="text-gray-500 mt-6 mb-2">{uploadMessage}</p>
                         {#if selectedFile}
-                            <Button class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition" on:click={uploadFile}>
+                            <Button on:click={uploadFile}>
                                 Upload
                             </Button>
                         {/if}
@@ -195,7 +202,12 @@
                                             {/if}
                                         </td>
                                         <td class="py-2 px-4">
-                                            <button class="text-red-500 hover:underline">Download</button>
+                                            {#if report.status === "Completed"}
+                                                <button class="text-red-500 hover:underline" on:click={() => ViewResult(report)}>View Results</button>
+                                            {:else}
+                                                <span class="bg-yellow-200 text-yellow-800 px-2 py-1 rounded">Pending</span>
+                                            {/if}
+                                            
                                         </td>
                                     </tr>
                                 {/each}
@@ -204,9 +216,9 @@
                     </div>
                     <div class="flex justify-between mt-4">
                         <span class="text-gray-600">Showing 1-4 of 20 reports</span>
-                        <div>
-                            <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">Previous</button>
-                            <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition">Next</button>
+                        <div class="flex gap-6">
+                            <Button style="font-weight:normal; padding: 7px 15px; border-radius: 10px"> Back</Button>
+                            <Button style="font-weight:normal; padding: 7px 15px; border-radius: 10px"> Next</Button>
                         </div>
                     </div>
                 </section>
@@ -231,3 +243,10 @@
 
 </body>
 </html>
+
+
+<style>
+    .custom-shadow:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+</style>
