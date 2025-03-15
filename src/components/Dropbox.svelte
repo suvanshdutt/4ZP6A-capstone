@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
   import Button from "../shared/Button.svelte";
-  let fileInput;
+  let fileInput: any;
 
-  function handleFiles(event) {
+  function handleFiles(event: any) {
     const files = event.target.files;
     // Further file handling logic can go here
   }
 
-  function triggerFileSelect(event) {
+  function triggerFileSelect(event: any) {
     event.preventDefault();
     fileInput.click(); 
   }

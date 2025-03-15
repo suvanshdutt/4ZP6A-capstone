@@ -5,11 +5,14 @@
 <header>
     <nav>
         <div class="header">
-            <a class="logo" href ="/">AI For Chest X-ray read</a>
+            <a class="logo" href ="/">
+              <img src="https://img.icons8.com/?size=100&id=q4yXFoEnYRH7&format=png&color=000000" alt="AI For Chest X-ray" class="logo-icon" />
+            </a>
             <div class="header-right">
               <a class="active" href="/">Home</a>
+              <a class="about" href="/about">About</a>
               <a href="/login">Login</a>
-              <a href="about">Contact</a>
+              <a href="/contact">Contact</a>
             </div>
           </div>
     </nav>
@@ -20,7 +23,7 @@
   overflow: hidden;
   font-family: 'Montserrat', sans-serif;
   background-color: var(--background_color);
-  padding: 20px 10px;
+  padding: 15px 10px;
 }
 
 .header a {
@@ -28,10 +31,10 @@
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 25px;
   border-radius: 2px;
-  color: grey;
+  color: var(--grey_text);
   
 }
 
@@ -56,6 +59,10 @@
   float: right;
 }
 
+.header-right a {
+  margin-left: 10px;
+}
+
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 400px) {
   .header a {
@@ -66,5 +73,10 @@
   .header-right {
     float: none;
   }
+}
+
+.logo-icon {
+    width: 60px;
+    height: auto; 
 }
 </style>

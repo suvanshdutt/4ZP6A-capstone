@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Header from "../shared/Header.svelte";
     import Button from "../shared/Button.svelte";
     import Dropbox from "./Dropbox.svelte";
 

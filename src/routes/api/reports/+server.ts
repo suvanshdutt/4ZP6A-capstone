@@ -101,7 +101,10 @@ export async function GET({ cookies, url }: RequestEvent) {
             const base64Image = Buffer.from(foundImage.data.buffer).toString("base64");
             // Assuming the image is stored as JPEG; adjust MIME type if needed.
             const imageUrl = `data:image/jpeg;base64,${base64Image}`;
-            return json({ imageUrl });
+
+            // Include predictions in the response
+            const predictions = foundImage.predictions || []; // Extract predictions, default to empty array if none
+            return json({ imageUrl, predictions });
         }
 
         const easternTimeFormatter = new Intl.DateTimeFormat('en-US', {

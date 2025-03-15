@@ -22,6 +22,12 @@
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
+            // Log additional error details
+            if (error instanceof TypeError) {
+                console.error("Network error or CORS issue:", error.message);
+            } else {
+                console.error("Unexpected error:", error);
+            }
         }
     }
 
@@ -38,6 +44,12 @@
             }
         } catch (error) {
             console.error("Error fetching reports:", error);
+            // Log additional error details
+            if (error instanceof TypeError) {
+                console.error("Network error or CORS issue:", error.message);
+            } else {
+                console.error("Unexpected error:", error);
+            }
         }
     }
     // Standard triggerFileSelect function to open file dialog, NOT AFFILIATED WITH API DIRECTLY
@@ -67,7 +79,6 @@
 
         const formData = new FormData();
         formData.append("file", selectedFile);
-
         try {
             const response = await fetch("/api/upload", {
                 method: "POST",
@@ -80,12 +91,18 @@
                 uploadMessage = "Upload successful!";
                 selectedFile = null;
                 await fetchReports();
+                location.reload();
             } else {
                 uploadMessage = `Upload failed: ${result.error}`;
             }
         } catch (error) {
             uploadMessage = "Error uploading file.";
             console.error("Upload error:", error);
+            if (error instanceof TypeError) {
+                console.error("Network error or CORS issue:", error.message);
+            } else {
+                console.error("Unexpected error:", error);
+            }
         }
     }
 
