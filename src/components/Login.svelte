@@ -36,6 +36,10 @@
             alert("Something went wrong. Please try again.");
         }
     }
+
+    function handleEmailInput(event: any) {
+        email = event.target.value.toLowerCase();
+    }
 </script>
 
 <main>
@@ -43,7 +47,7 @@
         <div class="form-left">
             <h1>Login</h1>
             <h2>Email</h2>
-            <input type="email" placeholder="Johnsmith@gmail.com" bind:value={email} />
+            <input type="email" placeholder="Johnsmith@gmail.com" bind:value={email} on:input={handleEmailInput}/>
 
             <h2>Password</h2>
             <div class="password">

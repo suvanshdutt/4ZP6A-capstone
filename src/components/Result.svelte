@@ -7,7 +7,7 @@
     let errorMessage = "";
     let showBanner = true;
 
-    let confidence = ["93", "91", "94", "89", "91", "91", "87", "92", "92", "91", "90", "88", "94", "96"];
+    let auroc = ["93", "91", "94", "89", "91", "91", "87", "92", "92", "91", "90", "88", "94", "96"];
 
     const CLASSES = [
         "Enlarged Cardiomediastinum",
@@ -81,7 +81,7 @@
                 <span>This tool uses AI to predict potential findings in chest X-rays.
                     While we strive for accuracy, predictions may be incorrect.  
                     Do not rely solely on these predictions for medical decisions. 
-                    Hover over labels to see confidence levels tested on 33,000+ images.
+                    Hover over labels to see model performance tested on 33,000+ images.
                     For more information on our AI model, visit the 
                     <a href="/about" class="about-link"> About page</a>.
                 </span>
@@ -124,7 +124,7 @@
                                 {CLASSES[index]}:
                             </span>
                             {#if tooltipVisible && tooltipIndex === index}
-                                <div class="tooltip">Confidence: {confidence[index]}%</div>
+                                <div class="tooltip">AUROC: {auroc[index]}%</div>
                             {/if}
                             <div class="bar-and-value">
                                 <div class="progress-bar">
@@ -271,7 +271,7 @@
         border: 1px solid var(--primary_color);
         border-radius: 10px;
         padding: 5px 10px;
-        margin-top: 30px;
+        margin-top: 25px;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         z-index: 10;
         white-space: nowrap;

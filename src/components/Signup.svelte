@@ -70,6 +70,10 @@
             alert("Something went wrong. Please try again.");
         }
     }
+
+    function handleEmailInput(event: any) {
+        email = event.target.value.toLowerCase(); // Convert input to lowercase
+    }
 </script>
 
 <main>
@@ -83,7 +87,7 @@
                 <input placeholder="John Smith" type="text" bind:value={fullName} />
 
                 <h2>Email</h2>
-                <input placeholder="Johnsmith@gmail.com" type="email" bind:value={email} />
+                <input placeholder="johnsmith@gmail.com" type="email" bind:value={email} on:input={handleEmailInput}/>
 
                 <h2>Password</h2>
                 <div class="password">
