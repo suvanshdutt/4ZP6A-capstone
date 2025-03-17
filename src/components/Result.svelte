@@ -166,7 +166,7 @@
         width: 90%;
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: 7px 10px 40px rgba(0, 0, 0, 0.3);
     }
 
     .banner {
@@ -183,6 +183,7 @@
         font-size: 24px;
         font-style: italic;
         font-family: Arial, Helvetica, sans-serif;
+        box-shadow: 3px 5px 20px rgba(0,0,0,0.15);
     }
 
     .close-button {

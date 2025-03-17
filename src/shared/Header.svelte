@@ -15,12 +15,15 @@
         return () => unsubscribe();
     });
 
+    let destination = "/";
+
     function handleLogout() {
         isLoggedIn.set(false);
-        window.location.href = "/";
+        window.location.href = destination;
     }
 
-    function confirmLogout() {
+    function confirmLogout(path = "/") {
+        destination = path;
         showLogoutDialog = true;
     }
 
@@ -52,10 +55,10 @@
             </a>
             <div class="header-right">
                 {#if loggedIn}
-                    <button on:click={confirmLogout}>Home</button>
-                    <button on:click={confirmLogout}>About</button>
-                    <button on:click={confirmLogout}>Logout</button>
-                    <button on:click={confirmLogout}>Contact</button>
+                    <button on:click={() => confirmLogout("/")}>Home</button>
+                    <button on:click={() => confirmLogout("/about")}>About</button>
+                    <button on:click={() => confirmLogout("/")}>Logout</button>
+                    <button on:click={() => confirmLogout("/contact")}>Contact</button>
                 {:else}
                     <a class="active" href="/">Home</a>
                     <a class="about" href="/about">About</a>

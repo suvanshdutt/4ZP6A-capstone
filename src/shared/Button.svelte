@@ -39,6 +39,7 @@
         border-radius: 16px;
         transition: 0.4s;
         cursor: pointer;
+        box-shadow: 3px 5px 20px rgba(0,0,0,0.3);
     }
     .inverse{
         border: var(--primary_color) solid 1px;
