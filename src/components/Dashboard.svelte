@@ -10,7 +10,7 @@
     let reports:any[] = [];
     let selectedFile:any = null;
     let uploadMessage = "";
-    let totalReports = 0;
+    let waiting = false;
     let showLogoutDialog = false;
     let searchQuery = "";
 
@@ -42,7 +42,6 @@
             const data = await res.json();
             if (res.ok) {
                 reports = [...data.reports];
-                totalReports = data.totalReports;
             } else {
                 console.error("Failed to fetch reports:", data.error);
             }
@@ -80,6 +79,8 @@
             uploadMessage = "Please select an image to upload.";
             return;
         }
+        uploadMessage = "Upload successful!";
+        waiting = true;
 
         const formData = new FormData();
         formData.append("file", selectedFile);
@@ -92,12 +93,14 @@
             const result = await response.json();
 
             if (response.ok) {
-                uploadMessage = "Upload successful!";
                 selectedFile = null;
                 await fetchReports();
+                uploadMessage = "Predictions are ready!"
+                waiting = false;
                 location.reload();
             } else {
                 uploadMessage = `Upload failed: ${result.error}`;
+                waiting = false;
             }
         } catch (error) {
             uploadMessage = "Error uploading file.";
@@ -107,6 +110,7 @@
             } else {
                 console.error("Unexpected error:", error);
             }
+            waiting = false;
         }
     }
 
@@ -239,10 +243,16 @@
                                 <p>or</p>
                                 <Button on:click={triggerFileSelect}>Browse Files</Button>
                                 <p class="text-gray-500 mt-6 mb-2">{uploadMessage}</p>
-                                {#if selectedFile}
+                                {#if selectedFile && !waiting}
                                     <Button on:click={uploadFile}>
                                         Upload
                                     </Button>
+                                {/if}
+                                {#if waiting}
+                                    <p class="text-gray-500 mt-6 mb-2">Please Wait While We Generate Your Predictions</p>
+                                    <svg class="loading" viewBox="25 25 50 50">
+                                        <circle class="loading-circle" r="20" cy="50" cx="50"></circle>
+                                      </svg>
                                 {/if}
                             </div>
                             <input type="file" class="hidden" bind:this={fileInput} on:change={handleFileChange} accept="image/jpeg, image/png, image/webp" />
@@ -375,6 +385,44 @@
         align-items: center;
         justify-content: center;
         gap: 5px;
+    }
+
+    .loading {
+        width: 3.25em;
+        transform-origin: center;
+        animation: rotate4 2s linear infinite;
+    }
+
+    .loading-circle {
+        fill: none;
+        stroke: var(--primary_color);
+        stroke-width: 2;
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        stroke-linecap: round;
+        animation: dash4 1.5s ease-in-out infinite;
+    }
+
+    @keyframes rotate4 {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes dash4 {
+        0% {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+        }
+
+        50% {
+            stroke-dasharray: 90, 200;
+            stroke-dashoffset: -35px;
+        }
+
+        100% {
+            stroke-dashoffset: -125px;
+        }
     }
 
     .dialog-box-bg {
