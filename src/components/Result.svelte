@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import Button from "../shared/Button.svelte";
 
+    
     let reportId = "";
     let reportData: any = null;
     let errorMessage = "";
@@ -47,6 +48,20 @@
         showBanner = false; 
     }
 
+    function openModal(element: HTMLElement) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage') as HTMLImageElement;
+
+    if (modal && modalImg) {
+        modal.style.display = 'flex';
+        modalImg.src = element.querySelector('img')?.src || '';
+    }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        if (modal) modal.style.display = 'none';
+    }
     async function fetchReport() {
         const params = new URLSearchParams(window.location.search);
         reportId = params.get("id") || "";
@@ -74,6 +89,12 @@
 </script>
 
 <main>
+    <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+        <div id="imageModal" class="modal" on:click={closeModal}>
+            <img id="modalImage" class="modal-content" />
+        </div>
+    </head>
     <div class="display">
         <Button inverse={true} on:click={goBack} style="align-self: flex-start; font-size: 20px;"> Back </Button>
         {#if showBanner}
@@ -89,17 +110,49 @@
             </div>
         {/if}
         <div class="results">
+            <div class="image-contains">
             <div class="image">
                 <p class="image-text">Chest X-ray Image</p>
                 {#if errorMessage}
                     <p>{errorMessage}</p>
                 {:else if reportData}
+                    <div 
+                    class="Real-Image" 
+                    on:click={(e) => openModal(e.currentTarget)} 
+                    on:keypress={(e) => e.key === 'Enter' && openModal(e.currentTarget)}
+                    role="button"
+                    tabindex="0"
+                    aria-label="Enlarge chest X-ray image"
+                >
                     <img src="{reportData.imageUrl}" alt="chest x-ray" />
+                </div>
                 {:else}
                     <p>Loading report...</p>
                 {/if}
             </div>
+        
+            <div class="image">
+                <p class="image-text">Heatmap</p>
+                {#if errorMessage}
+                    <p>{errorMessage}</p>
+                {:else if reportData}
+                <div 
+                class="Real-Image" 
+                on:click={(e) => openModal(e.currentTarget)} 
+                on:keypress={(e) => e.key === 'Enter' && openModal(e.currentTarget)}
+                role="button"
+                tabindex="0"
+                aria-label="Enlarge chest X-ray image"
+            >
+                <img src="{reportData.heatmapUrl}" alt="chest x-ray" />
+            </div>
+                {:else}
+                    <p>Loading report...</p>
+                {/if}
+            </div>
+            </div>
             <div class="predictions">
+        
                 <p class="image-text">Predictions</p>
                 {#if reportData && reportData.predictions && reportData.predictions.length > 0}
                 <div class="prediction-list">
@@ -207,13 +260,15 @@
     .image{
         flex:1;
         padding: 10px;
+        
     }
 
     .image-text {
+        font-family: 'Roboto', sans-serif;
         color: var(--heading_text);
         text-align: center;
-        font-size: 26px;
-        font-weight: bold;
+        font-size: 28px;
+        font-weight: 500;
     }
 
     .predictions {
@@ -285,5 +340,55 @@
         max-width: 100%;
         height: auto;
     }
+    .image-contains {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align : center;
+    flex: 1;
+    }
 
+    .Real-Image {
+    border-radius: 12px;      
+    overflow: hidden;          
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid #e3e3e3; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+
+    .Real-Image img {
+        width: 100%; 
+        display: flex; 
+    }
+
+    .Real-Image:hover {
+        transform: scale(1.03); 
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); 
+    }
+    .modal {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
 </style>

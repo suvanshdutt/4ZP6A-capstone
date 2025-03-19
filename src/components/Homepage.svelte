@@ -17,7 +17,6 @@
             </div>
         </div>
         <div class="dpb">
-            <Dropbox/>
         </div>
     </div>
 </main>

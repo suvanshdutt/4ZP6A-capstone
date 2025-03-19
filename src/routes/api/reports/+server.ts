@@ -41,7 +41,7 @@
 import type { RequestEvent } from "@sveltejs/kit"; // type import
 import { MongoClient } from "mongodb";
 import { json } from "@sveltejs/kit";
-
+import { v4 as uuidv4 } from 'uuid';
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority"; // MongoDB URI
 const client = new MongoClient(MONGO_URI); 
 
@@ -69,6 +69,17 @@ function getOrdinalSuffix(day: number): string {
         case 3: return 'rd';
         default: return 'th';
     }
+}
+const tokens = new Map(); // Temporary in-memory storage
+
+function generateToken(heatmap:string): string {
+    const token = uuidv4();
+    tokens.set(token, heatmap);
+
+    // Auto-expire tokens after 5 minutes
+    setTimeout(() => tokens.delete(token), 5 * 60 * 1000);
+
+    return token;
 }
 
 export async function GET({ cookies, url }: RequestEvent) {
@@ -104,7 +115,13 @@ export async function GET({ cookies, url }: RequestEvent) {
 
             // Include predictions in the response
             const predictions = foundImage.predictions || []; // Extract predictions, default to empty array if none
-            return json({ imageUrl, predictions });
+
+            
+            const heatmap = foundImage.heatmap; // Extract heatmap, default to empty string if none
+            const heatmapBase64 = Buffer.from(heatmap.buffer).toString("base64");
+            const heatmapUrl = `data:image/jpeg;base64,${heatmapBase64}`;
+
+            return json({ imageUrl, predictions, heatmapUrl });
         }
 
         const easternTimeFormatter = new Intl.DateTimeFormat('en-US', {

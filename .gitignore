@@ -38,3 +38,6 @@ __pycache__
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+#package-json
+package.json
