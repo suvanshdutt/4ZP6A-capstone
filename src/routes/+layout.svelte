@@ -23,7 +23,7 @@
 
 <style>
     /* Global styles can go here */
-    body {
+    :global(body) {
         background-color: var(--background_color);
         color: var(--text_color);
         font-family: 'Montserrat', sans-serif; /* Set a consistent global font */

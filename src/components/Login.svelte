@@ -47,7 +47,7 @@
         <div class="form-left">
             <h1>Login</h1>
             <h2>Email</h2>
-            <input type="email" placeholder="Johnsmith@gmail.com" bind:value={email} on:input={handleEmailInput}/>
+            <input type="email" placeholder="johnsmith@gmail.com" bind:value={email} on:input={handleEmailInput}/>
 
             <h2>Password</h2>
             <div class="password">
@@ -130,7 +130,7 @@
 
     .login-form {
         display: flex;
-        background-color: var(--background_color);
+        background-color: var(--secondary_color);
         padding: 40px;
         border-radius: 15px;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Drop shadow */
@@ -142,7 +142,7 @@
         text-align: center;
         width: 100%;
         margin: 20px 20px 20px 20px;
-        background-color: var(--background_color);
+        background-color: var(--secondary_color);
     }
 
     h1 {
@@ -168,6 +168,7 @@
         border: 1px solid #333; 
         border-radius: 5px;
         outline: none;
+        background-color: white;
     }
 
     .password {
