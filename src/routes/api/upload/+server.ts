@@ -50,7 +50,6 @@ import { json } from "@sveltejs/kit";
 import sharp from "sharp";
 import type { RequestEvent } from "@sveltejs/kit";
 import { v4 as uuidv4 } from 'uuid';
-import zlib from 'zlib';
 
 const MONGO_URI = "mongodb+srv://chestxraygrpacc:y40YFGS0bNGSPHSY@chestxray.qfyks.mongodb.net/?retryWrites=true&w=majority"; 
 const DATABASE_NAME = "ChestXraydb";

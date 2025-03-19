@@ -31,7 +31,6 @@
 		"mongodb": "^6.14.2",
 		"my-svelte-project": "file:",
 		"sharp": "^0.33.5",
-		"uuid": "^11.1.0",
-		"zlib": "^1.0.5"
+		"uuid": "^11.1.0"
 	}
 }
