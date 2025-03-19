@@ -1,11 +1,16 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import Button from "../shared/Button.svelte";
+    import { isLoggedIn } from "../stores/authStore";
     
+    isLoggedIn.set(true);
     let reportId = "";
     let reportData: any = null;
     let errorMessage = "";
     let showBanner = true;
+    let showLogoutDialog = false;
+    let showImageModal = false;
+    let enlargedImageUrl = "";
 
     let auroc = ["93", "91", "94", "89", "91", "91", "87", "92", "92", "91", "90", "88", "94", "96"];
 
@@ -68,10 +73,78 @@
         }
     }
 
+    function handleLogout() {
+        window.location.href = "/about";
+    }
+
+    function confirmLogout() {
+        showLogoutDialog = true;
+    }
+
+    function cancelLogout() {
+        showLogoutDialog = false;
+    }
+
+    function openImageModal(imageUrl: string) {
+        enlargedImageUrl = imageUrl; 
+        showImageModal = true;
+    }
+
+    function closeImageModal() {
+        showImageModal = false;
+        enlargedImageUrl = ""; 
+    }
+
     onMount(() => {
         fetchReport();
     });
 </script>
+
+{#if showLogoutDialog}
+    <div class="dialog-box-bg">
+        <div class="dialog-box">
+            <button class="close-button-dialog" on:click={cancelLogout} type="button">
+                <img class="close-icon" src="https://img.icons8.com/?size=100&id=7FSknHLAHdnP&format=png&color=da3029" alt="close"/>
+            </button>
+            <h2 class="heading2">Are you sure you want to logout?</h2>
+            <div class="logout-buttons">
+                <Button inverse={true} on:click={cancelLogout} style="font-weight:normal; padding: 7px 15px; border-radius: 10px">Cancel</Button>
+                <Button on:click={handleLogout} style="font-weight:normal; padding: 7px 15px; border-radius: 10px;">Logout</Button>
+            </div>
+        </div>
+    </div>
+{/if}
+
+{#if showImageModal}
+    <div 
+    class="modal-bg"
+    tabindex="0"
+    role="button" 
+    aria-label="Enlarge chest X-ray image"
+    on:click={closeImageModal} 
+    on:keydown={(e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        if (e.target instanceof HTMLElement) {
+            e.target.click();
+        }
+    }}>
+        <div 
+        tabindex="0"
+        role="button" 
+        aria-label="Enlarge chest X-ray image"
+        class="modal-content" 
+        on:click|stopPropagation on:keydown={(e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            e.preventDefault();
+            if (e.target instanceof HTMLElement) {
+                e.target.click();
+            }
+        }}>
+            <img src={enlargedImageUrl} alt="Enlarged chest x-ray" class="enlarged-image" />
+        </div>
+    </div>
+{/if}
 
 <main>
     <head>
@@ -86,7 +159,7 @@
                     Do not rely solely on these predictions for medical decisions. 
                     Hover over labels to see model performance tested on 33,000+ images.
                     For more information on our AI model, visit the 
-                    <a href="/about" class="about-link"> About page</a>.
+                    <button on:click={confirmLogout} class="about-link">About page</button>.
                 </span>
                 <button class="close-button" on:click={dismissBanner}>✖</button>
             </div>
@@ -98,11 +171,20 @@
                     {#if errorMessage}
                         <p>{errorMessage}</p>
                     {:else if reportData}
+                    
                         <div 
                         class="Real-Image" 
                         role="button"
                         tabindex="0"
-                        aria-label="Enlarge chest X-ray image">
+                        aria-label="Enlarge chest X-ray image"
+                        on:click={() => openImageModal(reportData.imageUrl)}
+                        on:keydown={(e) => {
+                            if (e.key !== 'Enter' && e.key !== ' ') return;
+                            e.preventDefault();
+                            if (e.target instanceof HTMLElement) {
+                                e.target.click();
+                            }
+                        }}>
                             <img src="{reportData.imageUrl}" alt="chest x-ray" />
                         </div>
                     {:else}
@@ -119,7 +201,15 @@
                     class="Real-Image"
                     role="button"
                     tabindex="0"
-                    aria-label="Enlarge chest X-ray image">
+                    aria-label="Enlarge chest X-ray image"
+                    on:click={() => openImageModal(reportData.heatmapUrl)}
+                    on:keydown={(e) => {
+                        if (e.key !== 'Enter' && e.key !== ' ') return;
+                        e.preventDefault();
+                        if (e.target instanceof HTMLElement) {
+                            e.target.click();
+                        }
+                    }}>
                         <img src="{reportData.heatmapUrl}" alt="chest x-ray" />
                     </div>
                 {:else}
@@ -226,9 +316,16 @@
     }
 
     .about-link {
+        background-color: var(--secondary_color);
+        font-size: 24px;
+        font-style: italic;
+        font-family: Arial, Helvetica, sans-serif;
         color: var(--primary_color);
         text-decoration: none;
+        border: none;
         cursor: pointer; 
+        padding: 0;
+        margin: 0;
     }
 
     .about-link:hover {
@@ -355,5 +452,82 @@
     .Real-Image:hover {
         transform: scale(1.03); 
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); 
+    }
+
+    .dialog-box-bg {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0,0,0,0.4); 
+        backdrop-filter: blur(2px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+    }
+
+    .dialog-box {
+        position: relative;
+        background-color: var(--background_color);
+        font-size: 22px;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+        max-width: 400px;
+        width: 90%;
+        padding-top: 40px;
+    }
+
+    .close-button-dialog {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .close-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .heading2 {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: var(--heading_text);
+    }
+
+    .logout-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+    }
+
+    .modal-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.6); 
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .enlarged-image {
+        max-width: 100%;
+        max-height: 80vh;
     }
 </style>

@@ -148,8 +148,8 @@
     .dialog-box-bg {
         position: fixed;
         inset: 0;
-        background-color: rgba(0,0,0,0.3); 
-        backdrop-filter: blur(1px);
+        background-color: rgba(0,0,0,0.4); 
+        backdrop-filter: blur(2px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -159,6 +159,7 @@
     .dialog-box {
         position: relative;
         background-color: var(--background_color);
+        font-size: 22px;
         border-radius: 16px;
         padding: 30px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
@@ -183,7 +184,7 @@
     }
 
     .heading2 {
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
         text-align: center;
         margin-bottom: 20px;
