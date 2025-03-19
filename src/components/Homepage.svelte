@@ -7,16 +7,22 @@
 <main>
     <div class="main-body">
         <div class="About">
-            <h1>About</h1>
-            <p>Our Project is based on AI chest read, Our website gives the patient a radiographed report of the chest xray
-                provided. The report checks on the potential disease/s.</p>
-            <p>Project By : Suvansh Dutt, Ujjwal Raj, Yuvraj Singh Sandhu and Suhaas Parcha </p>
+            <h2>AI-Powered</h2>
+            <h1>Chest X-Ray Analysis</h1>
+            <p>Our platform leverages deep learning to analyze chest X-rays, 
+                providing probability-based predictions and disease localization 
+                through heatmap visualizations</p>
+            <p>
+                By identifying potential abnormalities, the AI offers a reliable second opinion, 
+                helping to refine assessments. This technology enhances efficiency in medical imaging, 
+                offering valuable insights for improved analysis. </p>
             <div class="buttons">
                 <Button on:click={() => window.location.href = "/login"}>Login</Button>
                 <Button inverse={true} on:click={() => window.location.href = "/signup"}>Sign Up</Button>
             </div>
         </div>
-        <div class="dpb">
+        <div class="image">
+            <img alt="sample" src="/Images/sample.png"/>
         </div>
     </div>
 </main>
@@ -28,51 +34,71 @@
         margin: 0;
     }
     .main-body {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center; /* Vertically centers items */
-    gap: 200px; /* Adjust spacing between the elements */
-    flex-wrap: wrap; /* Allows items to wrap if the screen is smaller */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px; /* Adjust spacing between the elements */
+        flex-wrap: wrap; /* Allows items to wrap if the screen is smaller */
+        margin-top: 70px;
     }
 
-    .dpb {
-        flex: 1; 
-        display: flex; 
+    .image {
+        display: flex;
         justify-content: center; 
         align-items: center; 
-        margin-top: 20px; 
+        width: 35%;
+        margin-right: 100px;
+        margin-top: 50px; 
+        padding: 25px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    main {
-        margin-top: 15vh;
-        margin-left: 5vw; 
-        margin-right: 5vw;
+    .image:hover {
+        transform: scale(1.03); 
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); 
     }
 
+    .image img {
+        width: 100%;
+        height: auto;
+    }
 
     .About {
         margin-right: 5px;
-        margin-left: 50px;
-        width: 50%;
+        margin-left: 120px;
+        width: 45%;
+        max-width: 1000px;
+        margin-top: 0px;
     }
 
     h1 {
         color: var(--heading_text);
-        font-size: 80px;
+        font-size: clamp(45px, 9.5vw, 75px);
         font-weight: 5;
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        color: #676f85;
+        font-size: clamp(40px, 8vw, 50px);
+        margin-bottom: 0px;
     }
 
     p {
         color: var(--text_color);
         font-size: 20px;
         font-weight: 5;
-        margin-left: 25px;
+        margin-left: 50px;
     }
 
     .buttons {
         margin-left: 100px;
-        margin-top: 100px;
+        margin-top: 60px;
         display: flex;
         gap: 100px;
     }
