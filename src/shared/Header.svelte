@@ -71,21 +71,24 @@
 </header>
 <style>
     .header {
-    overflow: hidden;
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--background_color);
-    padding: 15px 10px;
+        display: flex;
+        overflow: hidden;
+        font-family: 'Montserrat', sans-serif;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--background_color);
+        padding: 0px 10px;
     }
 
     .header a {
-    float: left;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 20px;
-    line-height: 25px;
-    border-radius: 2px;
-    color: var(--grey_text);
+        float: left;
+        text-align: center;
+        padding: 10px;
+        text-decoration: none;
+        font-size: 20px;
+        line-height: 25px;
+        border-radius: 2px;
+        color: var(--grey_text);
     }
 
     .header a.logo {
@@ -106,7 +109,7 @@
 
     /* Float the link section to the right */
     .header-right {
-    float: right;
+        float: right;
     }
 
     .header-right a {

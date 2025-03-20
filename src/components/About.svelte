@@ -129,7 +129,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 0px;
+        margin-top: 30px;
     }
 
     .display {

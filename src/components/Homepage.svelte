@@ -1,6 +1,5 @@
 <script lang="ts">
     import Button from "../shared/Button.svelte";
-    import Dropbox from "./Dropbox.svelte";
 
 </script>
 
@@ -26,6 +25,12 @@
         </div>
     </div>
 </main>
+<div class="bg">
+    <div class="bg-image">
+        <img alt="bg-img" src="/Images/xray.jpg"/>
+    </div>
+    <div class="gradient"></div>
+</div>
 
 <style>
     :global(body) {
@@ -33,6 +38,7 @@
         color: var(--text_color);
         margin: 0;
     }
+
     .main-body {
         display: flex;
         flex-direction: row;
@@ -41,12 +47,14 @@
         gap: 20px; /* Adjust spacing between the elements */
         flex-wrap: wrap; /* Allows items to wrap if the screen is smaller */
         margin-top: 70px;
+        z-index: 100;
     }
 
     .image {
         display: flex;
         justify-content: center; 
         align-items: center; 
+        background-color: var(--background_color);
         width: 35%;
         margin-right: 100px;
         margin-top: 50px; 
@@ -55,6 +63,7 @@
         overflow: hidden;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        z-index: 100;
     }
 
     .image:hover {
@@ -73,6 +82,7 @@
         width: 45%;
         max-width: 1000px;
         margin-top: 0px;
+        z-index: 100;
     }
 
     h1 {
@@ -101,5 +111,41 @@
         margin-top: 60px;
         display: flex;
         gap: 100px;
+    }
+
+    .bg{
+        position: absolute;
+        overflow: hidden;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: -1;
+    }
+
+    .bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        margin-top: -200px;
+        margin-left: -350px;
+        transform: scale(0.6);
+        z-index: -1;
+    }
+
+    .bg-image img {
+        width: 120%;
+        opacity: 0.5;
+    }
+
+    .gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, transparent 10%, var(--background_color) 50%);
+        z-index: 11;
     }
 </style>
