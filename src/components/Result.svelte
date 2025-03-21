@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import Button from "../shared/Button.svelte";
+    import { onMount } from "svelte";
     import { isLoggedIn } from "../stores/authStore";
     
     isLoggedIn.set(true);
@@ -33,6 +33,21 @@
 
     let tooltipVisible = false;
     let tooltipIndex = -1;
+
+
+    function getSortedPredictions(predictions: number[]) {
+        if (!predictions) return [];
+        
+        // Create array of objects with all the information
+        const combined = CLASSES.map((className, index) => ({
+            className,
+            prediction: predictions[index],
+            auroc: auroc[index],
+            originalIndex: index
+        }));
+
+        return combined.sort((a, b) => b.prediction - a.prediction);
+    }
 
     function showTooltip(index:any) {
         tooltipVisible = true;
@@ -99,57 +114,53 @@
         fetchReport();
     });
 </script>
-
-{#if showLogoutDialog}
-    <div class="dialog-box-bg">
-        <div class="dialog-box">
-            <button class="close-button-dialog" on:click={cancelLogout} type="button">
-                <img class="close-icon" src="https://img.icons8.com/?size=100&id=7FSknHLAHdnP&format=png&color=da3029" alt="close"/>
-            </button>
-            <h2 class="heading2">Are you sure you want to logout?</h2>
-            <div class="logout-buttons">
-                <Button inverse={true} on:click={cancelLogout} style="font-weight:normal; padding: 7px 15px; border-radius: 10px">Cancel</Button>
-                <Button on:click={handleLogout} style="font-weight:normal; padding: 7px 15px; border-radius: 10px;">Logout</Button>
+<main>
+<div class="result-container">
+    {#if showLogoutDialog}
+        <div class="dialog-box-bg">
+            <div class="dialog-box">
+                <button class="close-button-dialog" on:click={cancelLogout} type="button">
+                    <img class="close-icon" src="https://img.icons8.com/?size=100&id=7FSknHLAHdnP&format=png&color=da3029" alt="close"/>
+                </button>
+                <h2 class="heading2">Are you sure you want to logout?</h2>
+                <div class="logout-buttons">
+                    <Button inverse={true} on:click={cancelLogout} style="font-weight:normal; padding: 7px 15px; border-radius: 10px">Cancel</Button>
+                    <Button on:click={handleLogout} style="font-weight:normal; padding: 7px 15px; border-radius: 10px;">Logout</Button>
+                </div>
             </div>
         </div>
-    </div>
-{/if}
+    {/if}
 
-{#if showImageModal}
-    <div 
-    class="modal-bg"
-    tabindex="0"
-    role="button" 
-    aria-label="Enlarge chest X-ray image"
-    on:click={closeImageModal} 
-    on:keydown={(e) => {
-        if (e.key !== 'Enter' && e.key !== ' ') return;
-        e.preventDefault();
-        if (e.target instanceof HTMLElement) {
-            e.target.click();
-        }
-    }}>
+    {#if showImageModal}
         <div 
+        class="modal-bg"
         tabindex="0"
         role="button" 
         aria-label="Enlarge chest X-ray image"
-        class="modal-content" 
-        on:click|stopPropagation on:keydown={(e) => {
+        on:click={closeImageModal} 
+        on:keydown={(e) => {
             if (e.key !== 'Enter' && e.key !== ' ') return;
             e.preventDefault();
             if (e.target instanceof HTMLElement) {
                 e.target.click();
             }
         }}>
-            <img src={enlargedImageUrl} alt="Enlarged chest x-ray" class="enlarged-image" />
+            <div 
+            tabindex="0"
+            role="button" 
+            aria-label="Enlarge chest X-ray image"
+            class="modal-content" 
+            on:click|stopPropagation on:keydown={(e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                e.preventDefault();
+                if (e.target instanceof HTMLElement) {
+                    e.target.click();
+                }
+            }}>
+                <img src={enlargedImageUrl} alt="Enlarged chest x-ray" class="enlarged-image" />
+            </div>
         </div>
-    </div>
-{/if}
-
-<main>
-    <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
-    </head>
+    {/if}
     <div class="display">
         <Button inverse={true} on:click={goBack} style="align-self: flex-start; font-size: 20px;"> Back </Button>
         {#if showBanner}
@@ -222,7 +233,7 @@
                 <p class="image-text">Predictions</p>
                 {#if reportData && reportData.predictions && reportData.predictions.length > 0}
                 <div class="prediction-list">
-                    {#each reportData.predictions as prediction, index}
+                    {#each getSortedPredictions(reportData.predictions) as {className, prediction, auroc: aurocValue}, index}
                         <div 
                             class="prediction-item"
                             role="button" 
@@ -240,10 +251,10 @@
                                 on:focus={() => showTooltip(index)} 
                                 on:blur={hideTooltip}
                             >
-                                {CLASSES[index]}:
+                                {className}:
                             </span>
                             {#if tooltipVisible && tooltipIndex === index}
-                                <div class="tooltip">AUROC: {auroc[index]}%</div>
+                                <div class="tooltip">AUROC: {aurocValue}%</div>
                             {/if}
                             <div class="bar-and-value">
                                 <div class="progress-bar">
@@ -260,14 +271,15 @@
             </div>
         </div>
     </div>
+</div>
 </main>
-
 <style>
-    :global(body) {
+    .result-container {
+        width: 100%;
+        min-height: calc(100vh - 60px);
+        margin-top: 60px;
+        padding-top: 20px;
         background-color: var(--background_color);
-        color: var(--text_color);
-        font-family: 'Montserrat', sans-serif;
-        margin: 0;
     }
 
     .display {
@@ -530,4 +542,5 @@
         max-width: 100%;
         max-height: 80vh;
     }
+
 </style>

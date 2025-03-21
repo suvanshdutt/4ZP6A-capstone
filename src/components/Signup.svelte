@@ -60,7 +60,6 @@
             const data = await response.json();
 
             if (response.ok) {
-                alert("Sign-up successful! Redirecting to login...");
                 window.location.href = "/login"; // Redirect user to login page
             } else {
                 alert(`Error: ${data.error}`);

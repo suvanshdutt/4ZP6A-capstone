@@ -26,7 +26,6 @@
             const data = await response.json();
 
             if (response.ok) {
-                alert("Login successful! Redirecting to dashboard...");
                 window.location.href = "/dashboard"; // Redirect user after login
             } else {
                 alert(`Error: ${data.error}`);

@@ -70,10 +70,19 @@
     </nav>
 </header>
 <style>
+    header {
+        position: flex;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        background-color: var(--background_color);
+    }
+
     .header {
         display: flex;
         overflow: hidden;
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Montserrat', sans-serif !important ;
         align-items: center;
         justify-content: space-between;
         background-color: var(--background_color);
@@ -199,4 +208,19 @@
         justify-content: center;
         gap: 50px;
     }
+    .header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--grey_text);
+    font-size: 20px;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    }
+
+    .header button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    
 </style>
