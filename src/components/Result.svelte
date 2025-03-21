@@ -277,7 +277,7 @@
     .result-container {
         width: 100%;
         min-height: calc(100vh - 60px);
-        margin-top: 60px;
+        margin-top: 10px;
         padding-top: 20px;
         background-color: var(--background_color);
     }
