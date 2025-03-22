@@ -10,7 +10,7 @@ type Theme = {
   heading_text: string;
 };
 
-export const _theme: Theme = {
+export const light_theme: Theme = {
   text_color: "rgba(24, 23, 24, 0.8)",
   background_color: "#fbede9",
   primary_color: "#da3029", // da1111
@@ -20,4 +20,15 @@ export const _theme: Theme = {
   heading_text: "#1e1e1e",
 };
 
-export const theme: Writable<Theme> = writable(_theme);
+export const dark_theme: Theme = {
+  text_color: "#ffffff",
+  background_color: "#1e1e1e",
+  primary_color: "#da3029",
+  secondary_color: "#333333",
+  accent_color: "#ffffff",
+  grey_text: "rgba(200, 200, 200, 1)",
+  heading_text: "#ffffff",
+};
+
+
+export const theme: Writable<Theme> = writable(light_theme);

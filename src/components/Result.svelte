@@ -288,7 +288,7 @@
         align-items: center;
         gap: 40px;
         width: 90%;
-        max-width: 1600px;
+        max-width: 2000px;
         padding: 40px;
         margin: 0 auto;
     }
@@ -296,7 +296,7 @@
     .results {
         display: flex;
         width: 95%;
-        max-width: 1500px;
+        max-width: 1800px;
         padding: 20px;
         border-radius: 15px;
         box-shadow: 7px 10px 40px rgba(0, 0, 0, 0.3);
