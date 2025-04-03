@@ -4,8 +4,6 @@
 </script>
 
 <main style="--background: {$theme.background_color};">
-    <h1>Hello, world!</h1>
-
     <Header />
 </main>
 <head>
@@ -18,9 +16,5 @@
         max-width: 240px;
         margin: 0 auto;
         background-color: var(--background);
-    }
-
-    h1 {
-        color: #333;
     }
 </style>

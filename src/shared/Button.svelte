@@ -18,6 +18,7 @@
                --secondary_color:{$theme.secondary_color};
                --font_size:{fontSize}px;
                --grey:{$theme.grey_text};"
+        {...$$restProps}
         >
     <slot></slot>
 </button>
@@ -36,8 +37,9 @@
         padding: 13px 26px;
         border: black solid 1px;
         border-radius: 16px;
-        transition: 0s background-color color border;
-
+        transition: 0.4s;
+        cursor: pointer;
+        box-shadow: 3px 5px 20px rgba(0,0,0,0.3);
     }
     .inverse{
         border: var(--primary_color) solid 1px;
@@ -45,7 +47,10 @@
         color: var(--primary_color);
     }
     button:hover {
-        box-shadow: var(--grey) 3px 3px 10px;
-        transition-delay: 0.05s;
+        box-shadow: 7px 5px 56px -14px var(--primary_color);
+    }
+    button:active {
+        transform: scale(0.90);
+        box-shadow: 7px 5px 56px -10px var(--primary_color);
     }
 </style>
