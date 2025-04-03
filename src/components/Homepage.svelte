@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="image">
-            <img alt="sample" src="/Images/sample.png"/>
+            <img alt="sample" src="/Images/sample1.png"/>
         </div>
     </div>
 </main>
@@ -56,10 +56,11 @@
         align-items: center; 
         background-color: var(--background_color);
         width: 35%;
-        max-width: 1000px;
+        max-width: 1500px;
+        min-width: 500px;
         margin-right: 50px;
         margin-top: 7vh; 
-        padding: 25px;
+        padding: 10px;
         border-radius: 15px;
         overflow: hidden;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
@@ -81,7 +82,8 @@
         margin-right: 5px;
         margin-left: 120px;
         width: 45%;
-        max-width: 1000px;
+        max-width: 1500px;
+        min-width: 400px;
         margin-top: 0px;
         z-index: 100;
     }
@@ -134,6 +136,37 @@
         z-index: -1;
     }
 
+    @media only screen and (max-width:1200px) {
+        .bg-image {
+            display: none;
+        }
+
+        .About {
+            margin-left: 20px;
+            width: 90%;
+        }
+
+        .image {
+            margin-left: 35px;
+            width: 90%;
+            min-width: 200px;
+        }
+
+        .buttons {
+            gap: 50px;
+        }
+    }
+
+    @media only screen and (max-width:500px){
+        .buttons {
+            margin-left: 30px;
+        }
+
+        .main-body {
+            margin-top: 5vh;
+        }
+    }
+
     .bg-image {
         position: absolute;
         top: 0;
@@ -155,7 +188,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at center, transparent 10%, var(--background_color) 50%);
+        background: radial-gradient(circle at center, transparent 0%, var(--background_color) 50%);
         z-index: 11;
     }
 </style>

@@ -194,9 +194,9 @@
 <body class="bg-[#fbede9] text-gray-800">
 
     <div class="flex flex-col md:flex-row">
-        <aside class="w-64 bg-[#fbede9] -200 p-4 shadow-lg">
+        <aside class="w-full md:w-64 bg-[#fbede9] -200 p-4 shadow-lg">
             <h2 class="text-2xl font-bold text-red-600 mb-6">Medical Dashboard</h2>
-            <ul>
+            <ul class="flex flex-row md:flex-col justify-evenly gap-8 md:gap-0">
                 <li class="mb-4">
                     <button on:click={triggerFileSelect} class="flex items-center text-gray-700 hover:text-red-500 transition duration-200" type="button">
                         <i class="fas fa-file-upload mr-2"></i> Upload X-Ray

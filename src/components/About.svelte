@@ -229,4 +229,61 @@
     .github-text {
         font-size: 1.2em; 
     }
+
+    @media only screen and (max-width:1200px) {
+        .about-title {
+            font-size: 40px;
+        }
+
+        .content {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .performance-metrics {
+            gap: 100px;
+        }
+
+        .metric {
+            width: 70px;
+            height: 70px;
+        }
+
+        .metric h3 {
+            font-size: 1.8em;
+            color: var(--background_color);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .metric p {
+            font-size: 0.8em;
+            color: var(--background_color);
+            margin-top: 5px;
+        }
+    }
+
+    @media only screen and (max-width:700px) {
+        .performance-metrics {
+            gap: 25px;
+        }
+
+        .metric {
+            width: 70px;
+            height: 70px;
+        }
+
+        .metric h3 {
+            font-size: 1.8em;
+            color: var(--background_color);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .metric p {
+            font-size: 0.8em;
+            color: var(--background_color);
+            margin-top: 5px;
+        }
+    }
 </style>

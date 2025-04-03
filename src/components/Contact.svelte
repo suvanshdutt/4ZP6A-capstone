@@ -89,4 +89,20 @@
     .github-text {
         font-size: 1.2em; 
     }
+
+    @media only screen and (max-width:1200px) {
+        .display {
+            padding: 10px;
+            width: 90%;
+            margin-left: 20px;
+            margin-right: 20px;
+            box-shadow: 3px 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .contact-description,
+        .contact-github {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    }
 </style>

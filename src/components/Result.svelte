@@ -543,4 +543,42 @@
         max-height: 80vh;
     }
 
+    @media only screen and (max-width:1100px) {
+        .display {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            width: 85%;
+        }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 3px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .banner {
+            padding: 15px;
+            width: 90%;
+        }
+
+        .predictions {
+            width: 100%;
+        }
+
+        .image-contains{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .Real-Image {
+            width: 100%;
+        }
+    }
+
 </style>

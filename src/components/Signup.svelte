@@ -166,12 +166,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
+        width: 90%;
         height: fit-content;
         max-width: 1000px;
         background-color: var(--secondary_color); 
         padding: 40px;
         margin-top: -60px;
+        margin-left: 30px;
+        margin-right: 30px;
         border-radius: 15px;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     }
@@ -262,5 +264,31 @@
     ul li {
         font-size: 18px;
         margin-bottom: 10px;
+    }
+
+    @media only screen and (max-width:900px) {
+        main {
+            height: auto;
+        }
+        
+        .signup-form {
+            width: 85%;
+            padding: 25px;
+            padding-top: 40px;
+            margin-top: 100px;
+        }
+
+        .form-container {
+            flex-direction: column;
+        }
+
+        .form-left {
+            width: 90%;
+        }
+
+        .form-right {
+            width: 90%;
+            padding-left: 20px;
+        }
     }
 </style>

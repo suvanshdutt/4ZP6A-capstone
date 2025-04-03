@@ -82,19 +82,25 @@
                     </svg>
                 </button>
             </div>
-            <div class="forgot-password">
-                <a href="/">Forgot password?</a>
-            </div>
 
-            <Button on:click={login} style="display:block; width: 60%; font-size: 24px; padding: 15px; margin: auto">Login</Button>
+            <!-- not implemented -->
+            <!-- <div class="forgot-password">
+                <a href="/">Forgot password?</a>
+            </div> -->
+
+            <Button on:click={login} style="display:block; width: 60%; font-size: 24px; padding: 15px; margin: auto; margin-top:25px">Login</Button>
             
-            <div class="or-divider">
+            <p class="signup-link">
+                Create an account <a href="/signup">Sign Up</a>
+            </p>
+
+            <!-- <div class="or-divider">
                 <span></span>
                 <p>or login with</p>
                 <span></span>
-            </div>
+            </div> -->
             
-            <div class="social-login">
+            <!-- <div class="social-login">
                 <button class="social-btn">
                     <img alt="Google" style="width: 60px; height: 60px" src="/Images/google.png" />
                 </button>
@@ -104,7 +110,7 @@
                 <button class="social-btn">
                     <img alt="Linkedin" style="width: 53px; height: 53px" src="/Images/Linkedin.png" />
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </main>
@@ -183,7 +189,17 @@
         top: 7.5px;
     }
 
-    .forgot-password {
+    .signup-link {
+        float: left;
+        margin-top: 40px;
+    }
+
+    .signup-link a {
+        color: #f03e3e;
+        text-decoration: none;
+    }
+
+    /* .forgot-password {
         text-align: right;
         margin-bottom: 20px;
     }
@@ -224,5 +240,5 @@
     .social-btn img {
         width: 40px;
         height: 40px;
-    }
+    } */
 </style>

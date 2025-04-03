@@ -139,9 +139,7 @@
 
     .header a:hover {
     background-color: var(--background_color);
-    
     }
-
 
     .header a.active {
         background-color: var(--background_color);
@@ -172,15 +170,36 @@
     }
 
     /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
-    @media screen and (max-width: 400px) {
-    .header a {
-        float: none;
-        display: block;
-        text-align: left;
-    }
-    .header-right {
-        float: none;
-    }
+    @media screen and (max-width: 600px) {
+        .header {
+            padding: 10px;
+            width: 100%;
+        }
+
+        .header a, .header button {
+            font-size: 20px;
+            padding: 0px;
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: auto;
+        }
+
+        .header button.logo {
+            padding: 0;
+        }
+
+        .header-right a, .header-right button {
+            white-space: nowrap;
+        }
     }
 
     .logo-icon {
