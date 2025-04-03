@@ -77,13 +77,16 @@
 <header>
     <nav>
         <div class="header">
-            <button class="logo" on:click|preventDefault={toggleTheme}>
+            <!-- <button class="logo" on:click|preventDefault={toggleTheme}>
                 {#if currentTheme === light_theme}
                     <img src="https://img.icons8.com/?size=100&id=q4yXFoEnYRH7&format=png&color=000000" alt="AI For Chest X-ray" class="logo-icon" />
                 {:else}
                     <img src="https://img.icons8.com/?size=100&id=2ZR4nkc83eZe&format=png&color=ffffff" alt="AI For Chest X-ray" class="logo-icon" />
                 {/if}
-                </button>
+                
+                </button> -->
+            
+            <img src="https://media.discordapp.net/attachments/1045502891600912545/1357439673961680926/image.png?ex=67f035b6&is=67eee436&hm=03b09a62041d6a1f5494765183b3f4b93d7c652df9a04909474991bf5ae9145e&=&format=webp&quality=lossless&width=461&height=461" alt="AI For Chest X-ray" class="replacement" />     
             <div class="header-right">
                 {#if loggedIn}
                     <button on:click={() => confirmLogout("/")}>Home</button>
@@ -200,6 +203,12 @@
         .header-right a, .header-right button {
             white-space: nowrap;
         }
+            .replacement {
+        display: flex;
+        width: 60px;
+        height: auto; 
+        padding-top: 0px; 
+        }
     }
 
     .logo-icon {
@@ -267,5 +276,11 @@
         padding: 10px;
         font-family: 'Montserrat', sans-serif;
         text-decoration: none;
+    }
+    .replacement {
+      display: flex;
+      width: 100px;
+      height: auto; 
+      padding-top: 10px; 
     }
 </style>
