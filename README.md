@@ -57,11 +57,11 @@ To log in, click on the Login button and use the following credentials:
 ### Running the Model
 - Install dependencies using:
   ```sh
-  pip install -r backend/utility/requirements.txt
+  pip install -r backend/requirements.txt
   ```
 - Train and test the model by running:
   ```sh
-  python backend/utility/Train.py
+  python backend/train.py
   ```
 - The best pretrained model is located in:
   ```sh
@@ -81,7 +81,7 @@ Our AI was trained on the **Stanford CheXpert dataset**, which comprises a total
 - **Sensitivity:** 81%
 
 
-![Chest X-ray Sample](backend/train_metrics.png)
+![Chest X-ray Sample](backend/training_metrics.png)
 
 ---
 
