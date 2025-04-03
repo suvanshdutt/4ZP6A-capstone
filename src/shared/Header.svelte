@@ -134,12 +134,6 @@
         color: var(--grey_text);
     }
 
-    .header button.logo {
-    font-size: 20px;
-    font-weight: bold;
-    }
-
-
     .header a:hover {
     background-color: var(--background_color);
     }
@@ -191,15 +185,6 @@
             align-items: center;
         }
 
-        .logo-icon {
-            width: 45px;
-            height: auto;
-        }
-
-        .header button.logo {
-            padding: 0;
-        }
-
         .header-right a, .header-right button {
             white-space: nowrap;
         }
@@ -209,11 +194,6 @@
         height: auto; 
         padding-top: 0px; 
         }
-    }
-
-    .logo-icon {
-        width: 60px;
-        height: auto; 
     }
 
     .dialog-box-bg {
