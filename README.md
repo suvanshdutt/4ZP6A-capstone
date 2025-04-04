@@ -91,6 +91,7 @@ Our AI was trained on the **Stanford CheXpert dataset**, which comprises a total
 ---
 
 ## Notes
+**All the documents including the SRS, Project Plan, Design Doc, V&V document, demo video and  poster file can be found under `documents/`** 
 Ensure all dependencies are installed before running the application. Contact the team at **chestxraygrpacc@gmail.com** for additional support if needed.
 
 
