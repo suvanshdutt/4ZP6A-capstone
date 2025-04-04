@@ -86,7 +86,7 @@ Our AI was trained on the **Stanford CheXpert dataset**, which comprises a total
 
 ![Chest X-ray Sample](backend/training_metrics.png)
 
-
+![Chest X-ray Sample](backend/testing_metrics.png)
 
 ---
 
