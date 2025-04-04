@@ -11,6 +11,8 @@ Mac ID: sandhy1, dutts1, parchas, raju1
 
 Contact : **chestxraygrpacc@gmail.com** 
 
+**You can view the project live at** [Capstone Azure Project](https://capstone-azure-two.vercel.app/).
+
 # Chest X-ray Analysis running 
 
 ## Overview
@@ -63,12 +65,13 @@ To log in, click on the Login button and use the following credentials:
   ```sh
   python backend/train.py
   ```
-- The best pretrained model is located in:
+- The best version of our model is located in:
   ```sh
   backend/model/
   ```
 - **backend/Lightning_logs/** stores logs of past training attempts before achieving the best model.
 
+- Example images have been added under `backend/sample_xrays` for testing purposes on our website.
 ## Model specifics  
 
 Our AI was trained on the **Stanford CheXpert dataset**, which comprises a total of **224,316 chest radiographs** of **65,240 patients**. For more details on the dataset, please visit the [Stanford CheXpert website](https://stanfordmlgroup.github.io/competitions/chexpert/).
@@ -82,6 +85,8 @@ Our AI was trained on the **Stanford CheXpert dataset**, which comprises a total
 
 
 ![Chest X-ray Sample](backend/training_metrics.png)
+
+
 
 ---
 
